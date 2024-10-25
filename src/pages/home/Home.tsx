@@ -3,8 +3,9 @@ import clsx from 'clsx';
 import Image from 'next/image';
 import Link from 'next/link';
 
+import { AcmeLogo } from '@/shared/ui';
+
 import styles from './styles.module.css';
-import { AcmeLogo } from './ui';
 
 export const Home = () => {
   const isTriangleColored = true;
