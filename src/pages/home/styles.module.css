@@ -1,0 +1,11 @@
+.triangle {
+    height: 0;
+    width: 0;
+    border-bottom: 25px solid black;
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+}
+
+.triangleColored {
+    border-bottom-color: #a855f7;
+}
