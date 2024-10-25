@@ -9,7 +9,8 @@
     "next/typescript",
     "standard",
     "prettier",
-    "plugin:prettier/recommended"
+    "plugin:prettier/recommended",
+    "plugin:jsx-a11y/recommended"
   ],
   "rules": {
     "jsx-a11y/anchor-has-content": "off",
