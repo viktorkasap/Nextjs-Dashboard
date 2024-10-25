@@ -1,0 +1,116 @@
+// TODO setup ESLint
+{
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "next/core-web-vitals",
+    "next/typescript",
+    "standard",
+    "prettier",
+    "plugin:prettier/recommended"
+  ],
+  "rules": {
+    "jsx-a11y/anchor-has-content": "off",
+    "jsx-a11y/anchor-is-valid": "off",
+    "no-console": "error",
+    "react/display-name": "off",
+    "semi": [ "error",  "always" ],
+    "import/no-anonymous-default-export": "off",
+    "import/order": [
+    "error",
+    {
+      "pathGroups": [
+        {
+          "pattern": "react",
+          "group": "external",
+          "position": "before"
+        },
+        {
+          "pattern": "@emotion/*",
+          "group": "external",
+          "position": "after"
+        },
+        {
+          "pattern": "@mantine/*",
+          "group": "external",
+          "position": "after"
+        },
+        {
+          "pattern": "@app",
+          "group": "internal",
+          "position": "after"
+        },
+        {
+          "pattern": "@processes/**",
+          "group": "internal",
+          "position": "after"
+        },
+        {
+          "pattern": "@pages/**",
+          "group": "internal",
+          "position": "after"
+        },
+        {
+          "pattern": "@widgets/**",
+          "group": "internal",
+          "position": "after"
+        },
+        {
+          "pattern": "@features/**",
+          "group": "internal",
+          "position": "after"
+        },
+        {
+          "pattern": "@entities/**",
+          "group": "internal",
+          "position": "after"
+        },
+        {
+          "pattern": "@shared/**",
+          "group": "internal",
+          "position": "after"
+        },
+        {
+          "pattern": "@test-utils",
+          "group": "internal",
+          "position": "after"
+        }
+      ],
+      "newlines-between": "always",
+      "pathGroupsExcludedImportTypes": ["builtin"],
+      "alphabetize": { "order": "asc", "caseInsensitive": true },
+      "groups": ["builtin", "external", "internal", "parent", "sibling", "index"]
+    }
+  ],
+    "comma-dangle": [ "error", "always-multiline" ],
+    "no-unused-vars": [
+    "error",
+    {
+      "vars": "all",
+      "args": "after-used",
+      "varsIgnorePattern": "^_.*$|React",
+      "argsIgnorePattern": "^_" // will ignore "_varname"
+    }
+  ],
+    "max-len": [
+    "error",
+    {
+      "code": 140,
+      "ignoreUrls": true,
+      "ignoreStrings": true,
+      "ignoreComments": true,
+      "ignorePattern": "d=\"([\\s\\S]*?)\""
+      // svg d=...
+    }
+  ],
+    "react/jsx-uses-react": "off",
+    "react/react-in-jsx-scope": "off",
+    "react-hooks/exhaustive-deps": "error",
+    "padding-line-between-statements": [
+    "error",
+    { "blankLine": "always", "prev": "*", "next": "return" }
+  ]
+  }
+}
