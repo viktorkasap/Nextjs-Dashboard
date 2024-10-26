@@ -1,0 +1,1 @@
+export { LatestInvoices } from './LatestInvoices';
