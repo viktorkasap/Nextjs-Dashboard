@@ -3,14 +3,23 @@ import { sql } from '@vercel/postgres';
 import { Revenue } from '../types';
 
 export async function getRevenue() {
+  const start = performance.now();
+
   try {
     // Artificially delay a response for demo purposes.
-    // console.log('Fetching revenue data...');
-    // await new Promise((resolve) => setTimeout(resolve, 3000));
+    // eslint-disable-next-line no-console
+    console.log('Fetching revenue data...:', `${start.toFixed(2)}ms`);
+    await new Promise((resolve) => setTimeout(resolve, 3000));
 
     const data = await sql<Revenue>`SELECT * FROM revenue`;
 
-    // console.log('Data fetch completed after 3 seconds.');
+    const end = performance.now();
+    const timeTaken = end - start;
+
+    // eslint-disable-next-line no-console
+    console.log('Data fetch completed after 3 seconds:', `${end.toFixed(2)}ms`);
+    // eslint-disable-next-line no-console
+    console.log('Pause time:', `${timeTaken.toFixed(2)}ms`);
 
     return data.rows;
   } catch (error) {

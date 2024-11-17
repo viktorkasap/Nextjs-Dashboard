@@ -1,0 +1,1 @@
+export { LatestInvoicesSkeleton } from './LatestInvoicesSkeleton';
