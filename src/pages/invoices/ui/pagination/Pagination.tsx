@@ -3,21 +3,28 @@
 import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
 import Link from 'next/link';
+import { ReadonlyURLSearchParams, usePathname, useSearchParams } from 'next/navigation';
 
 import { generatePagination } from '@/shared/lib';
 
 interface PaginationProps {
-  currentPage: number;
   totalPages: number;
 }
 
-export const Pagination = ({ currentPage, totalPages }: PaginationProps) => {
+export const Pagination = ({ totalPages }: PaginationProps) => {
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const currentPage = Number(searchParams?.get('page')) || 1;
   const allPages = generatePagination(currentPage, totalPages);
 
   return (
     <div className="mt-5 flex w-full justify-center">
       <div className="inline-flex">
-        <PaginationArrow direction="left" href={createPageURL(currentPage - 1)} isDisabled={currentPage <= 1} />
+        <PaginationArrow
+          direction="left"
+          href={createPageURL({ pathname, searchParams, pageNumber: currentPage - 1 })}
+          isDisabled={currentPage <= 1}
+        />
 
         <div className="flex -space-x-px">
           {allPages.map((page, index) => {
@@ -29,12 +36,22 @@ export const Pagination = ({ currentPage, totalPages }: PaginationProps) => {
             if (page === '...') position = 'middle';
 
             return (
-              <PaginationNumber key={page} href={createPageURL(page)} page={page} position={position} isActive={currentPage === page} />
+              <PaginationNumber
+                key={page}
+                page={page}
+                position={position}
+                isActive={currentPage === page}
+                href={createPageURL({ pathname, searchParams, pageNumber: page })}
+              />
             );
           })}
         </div>
 
-        <PaginationArrow direction="right" href={createPageURL(currentPage + 1)} isDisabled={currentPage >= totalPages} />
+        <PaginationArrow
+          direction="right"
+          isDisabled={currentPage >= totalPages}
+          href={createPageURL({ pathname, searchParams, pageNumber: currentPage + 1 })}
+        />
       </div>
     </div>
   );
@@ -90,6 +107,14 @@ const PaginationArrow = ({ href, direction, isDisabled }: PaginationArrowProps) 
   );
 };
 
-const createPageURL = (pageNumber: number | string) => {
-  return String(pageNumber);
+interface CreatePageURLProps {
+  pageNumber: number | string;
+  searchParams: ReadonlyURLSearchParams | null;
+  pathname: string | null;
+}
+const createPageURL = ({ pageNumber, searchParams, pathname }: CreatePageURLProps) => {
+  const params = new URLSearchParams(searchParams || undefined);
+  params.set('page', pageNumber.toString());
+
+  return `${pathname}?${params.toString()}`;
 };

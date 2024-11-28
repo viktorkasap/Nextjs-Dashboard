@@ -2,12 +2,12 @@ import { sql } from '@vercel/postgres';
 
 import { InvoicesTable } from '@/entites/invoice';
 
+import { ITEMS_PER_PAGE } from '../constants';
+
 interface GetFilteredInvoicesProps {
   query: string;
   currentPage: number;
 }
-
-const ITEMS_PER_PAGE = 6;
 
 export const getFilteredInvoices = async ({ query, currentPage }: GetFilteredInvoicesProps) => {
   const offset = (currentPage - 1) * ITEMS_PER_PAGE;
