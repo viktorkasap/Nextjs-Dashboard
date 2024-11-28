@@ -5,6 +5,7 @@ import { usePathname, useSearchParams, useRouter } from 'next/navigation';
 import { useDebouncedCallback } from 'use-debounce';
 
 const SEARCH_QUERY_NAME = 'query';
+const SEARCH_PAGE_NUMBER_NAME = 'page';
 
 export const SearchBar = ({ placeholder }: { placeholder: string }) => {
   const searchParams = useSearchParams();
@@ -13,7 +14,7 @@ export const SearchBar = ({ placeholder }: { placeholder: string }) => {
 
   const handleChange = useDebouncedCallback(({ query }: { query: string }) => {
     const params = new URLSearchParams(searchParams || '');
-    params.set('page', '1');
+    params.set(SEARCH_PAGE_NUMBER_NAME, '1');
 
     if (query) {
       params.set(SEARCH_QUERY_NAME, query);
