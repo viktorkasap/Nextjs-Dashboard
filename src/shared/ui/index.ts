@@ -4,3 +4,6 @@ export { CardSkeleton } from './card-skeleton';
 export { RevenueChartSkeleton } from './revenue-chart-skeleton';
 export { LatestInvoicesSkeleton } from './latest-invoices-skeleton';
 export { InvoiceSkeleton } from './invoice-skeleton';
+export { TableRowSkeleton } from './table-row-skeleton';
+export { InvoicesMobileSkeleton } from './invoices-mobile-skeleton';
+export { InvoicesTableSkeleton } from './invoices-table-skeleton';

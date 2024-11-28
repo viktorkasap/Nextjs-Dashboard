@@ -1,0 +1,1 @@
+export { InvoicesMobileSkeleton } from './InvoicesMobileSkeleton';

@@ -1,0 +1,1 @@
+export { InvoicesTableSkeleton } from './InvoicesTableSkeleton';
