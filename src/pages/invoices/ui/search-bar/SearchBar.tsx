@@ -14,6 +14,8 @@ export const SearchBar = ({ placeholder }: { placeholder: string }) => {
 
   const handleChange = useDebouncedCallback(({ query }: { query: string }) => {
     const params = new URLSearchParams(searchParams || '');
+
+    // For a new search need to reset the page number to 1
     params.set(SEARCH_PAGE_NUMBER_NAME, '1');
 
     if (query) {
