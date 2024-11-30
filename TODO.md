@@ -1,0 +1,2 @@
+- [ ] Add pending status for forms element
+- [ ] Validate form inputs and show errors

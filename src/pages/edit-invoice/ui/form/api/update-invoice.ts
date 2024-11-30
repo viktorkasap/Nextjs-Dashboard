@@ -18,6 +18,8 @@ const FormDataSchema = z.object({
 const CreateInvoiceSchema = FormDataSchema.omit({ date: true });
 
 export const updateInvoice = async (invoiceId: string, formData: FormData) => {
+  await new Promise((resolve) => setTimeout(resolve, 3000));
+
   const { customerId, amount, status, id } = CreateInvoiceSchema.parse({
     customerId: formData.get('customerId'),
     amount: formData.get('amount'),

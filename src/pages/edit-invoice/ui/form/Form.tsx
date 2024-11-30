@@ -12,6 +12,8 @@ interface FormProps {
   customers: CustomerField[];
 }
 
+// TODO: Add pending status for forms element
+
 export const Form = ({ invoice, customers }: FormProps) => {
   const currentCustomer = customers.find((customer) => customer.id === invoice.customer_id);
 
