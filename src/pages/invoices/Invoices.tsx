@@ -19,7 +19,7 @@ export const Invoices = async (props: InvoicesPageProps) => {
   const totalPages = await getInvoicesPages(query);
 
   return (
-    <div className="w-full">
+    <main className="w-full">
       <div className="flex w-full items-center justify-between">
         <h1 className={`${lusitana.className} text-2xl`}>Invoices</h1>
       </div>
@@ -35,6 +35,6 @@ export const Invoices = async (props: InvoicesPageProps) => {
         StatusInvoice={StatusInvoice}
       />
       <Pagination totalPages={totalPages} />
-    </div>
+    </main>
   );
 };

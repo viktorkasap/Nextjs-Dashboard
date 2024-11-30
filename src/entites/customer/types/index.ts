@@ -4,3 +4,8 @@ export type Customer = {
   email: string;
   image_url: string;
 };
+
+export type CustomerField = {
+  id: string;
+  name: string;
+};
