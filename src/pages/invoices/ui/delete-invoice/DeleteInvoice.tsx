@@ -4,6 +4,8 @@ import { DeleteInvoiceProps } from '../../types';
 
 import { deleteInvoiceById } from './api';
 
+// TODO: Add pending status for forms element
+
 export const DeleteInvoice = ({ id }: DeleteInvoiceProps) => {
   const deleteAction = deleteInvoiceById.bind(null, id);
 

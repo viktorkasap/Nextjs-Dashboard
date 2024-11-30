@@ -13,6 +13,7 @@ interface FormProps {
 }
 
 // TODO: Add pending status for forms element
+// TODO: Add validate inputs values
 
 export const Form = ({ invoice, customers }: FormProps) => {
   const currentCustomer = customers.find((customer) => customer.id === invoice.customer_id);

@@ -6,6 +6,9 @@ import { Button } from '@/shared/ui';
 
 import { createInvoice } from './api';
 
+// TODO: Add pending status for forms element
+// TODO: Add validate inputs values
+
 export const Form = ({ customers }: { customers: CustomerField[] }) => {
   return (
     <form action={createInvoice}>
