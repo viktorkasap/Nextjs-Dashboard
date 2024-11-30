@@ -2,7 +2,7 @@ import { getInvoicesPages } from '@/entites/invoice';
 import { Pagination } from '@/pages/invoices/ui/pagination';
 import { lusitana } from '@/shared/assets';
 
-import { SearchBar, CreateInvoiceButton, Table } from './ui';
+import { SearchBar, CreateInvoiceButton, Table, DeleteInvoice, UpdateInvoice, StatusInvoice } from './ui';
 
 interface InvoicesPageProps {
   searchParams?: Promise<{
@@ -27,7 +27,13 @@ export const Invoices = async (props: InvoicesPageProps) => {
         <SearchBar placeholder="Search invoices..." />
         <CreateInvoiceButton />
       </div>
-      <Table query={query} currentPage={currentPage} />
+      <Table
+        query={query}
+        currentPage={currentPage}
+        DeleteInvoice={DeleteInvoice}
+        UpdateInvoice={UpdateInvoice}
+        StatusInvoice={StatusInvoice}
+      />
       <Pagination totalPages={totalPages} />
     </div>
   );

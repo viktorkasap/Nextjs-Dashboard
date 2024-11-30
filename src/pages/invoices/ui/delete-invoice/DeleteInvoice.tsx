@@ -1,6 +1,8 @@
 import { TrashIcon } from '@heroicons/react/24/outline';
 
-export const DeleteInvoice = ({ id }: { id: string }) => {
+import { DeleteInvoiceProps } from '../../types';
+
+export const DeleteInvoice = ({ id }: DeleteInvoiceProps) => {
   // eslint-disable-next-line no-console
   console.log('Deleting invoice ID:', id);
 

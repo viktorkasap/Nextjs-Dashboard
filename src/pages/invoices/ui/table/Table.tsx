@@ -1,4 +1,4 @@
-import { Suspense } from 'react';
+import { ComponentType, Suspense } from 'react';
 
 import Image from 'next/image';
 
@@ -6,24 +6,33 @@ import { getFilteredInvoices } from '@/entites/invoice';
 import { formatCurrency, formatDateToLocal } from '@/shared/lib';
 import { InvoicesTableSkeleton } from '@/shared/ui';
 
-import { DeleteInvoice, StatusInvoice, UpdateInvoice } from './ui';
+import { DeleteInvoiceProps, UpdateInvoiceProps, StatusInvoiceProps } from '../../types';
 
 interface TableProps {
   query: string;
   currentPage: number;
+  DeleteInvoice: ComponentType<DeleteInvoiceProps>;
+  UpdateInvoice: ComponentType<UpdateInvoiceProps>;
+  StatusInvoice: ComponentType<StatusInvoiceProps>;
 }
 
-export const Table = ({ query, currentPage }: TableProps) => {
+export const Table = ({ query, currentPage, UpdateInvoice, StatusInvoice, DeleteInvoice }: TableProps) => {
   return (
     <>
       <Suspense key={query + currentPage} fallback={<InvoicesTableSkeleton />}>
-        <TableView query={query} currentPage={currentPage} />
+        <TableView
+          query={query}
+          currentPage={currentPage}
+          DeleteInvoice={DeleteInvoice}
+          UpdateInvoice={UpdateInvoice}
+          StatusInvoice={StatusInvoice}
+        />
       </Suspense>
     </>
   );
 };
 
-const TableView = async ({ query, currentPage }: TableProps) => {
+const TableView = async ({ query, currentPage, UpdateInvoice, DeleteInvoice, StatusInvoice }: TableProps) => {
   const invoices = await getFilteredInvoices({ query, currentPage });
 
   return (

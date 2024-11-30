@@ -1,7 +1,9 @@
 import { PencilIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 
-export const UpdateInvoice = ({ id }: { id: string }) => {
+import { UpdateInvoiceProps } from '../../types';
+
+export const UpdateInvoice = ({ id }: UpdateInvoiceProps) => {
   // eslint-disable-next-line no-console
   console.log('Update invoice ID:', id);
 
