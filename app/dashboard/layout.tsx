@@ -4,8 +4,6 @@
     `pnpm add next@canary`
 */
 
-//
-
 // eslint-disable-next-line camelcase
 export const experimental_ppr = true;
 

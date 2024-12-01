@@ -5,7 +5,7 @@ import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { z } from 'zod';
 
-import { EInvoiceStatus } from '@/entites/invoice';
+import { EInvoiceStatus, InvoiceStatus } from '@/entites/invoice';
 
 const FormDataSchema = z.object({
   id: z.string(),
@@ -31,14 +31,34 @@ export const updateInvoice = async (invoiceId: string, formData: FormData) => {
   const date = new Date().toDateString().split('T')[0];
 
   // eslint-disable-next-line no-console
-  console.log({ customerId, amount, amountInCents, status, date, invoiceId, id });
+  console.log('Updated invoice data:', { customerId, amount, amountInCents, status, date, invoiceId, id });
 
-  await sql`
+  try {
+    await update({ customerId, status, id, amountInCents });
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.log('Update invoice error:', (error as Error).message);
+
+    return {
+      message: 'Database Error: Failed to Update Invoice.',
+    };
+  }
+
+  revalidatePath('/dashboard/invoices');
+  redirect('/dashboard/invoices');
+};
+
+interface UpdateProps {
+  customerId: string;
+  amountInCents: number;
+  status: InvoiceStatus;
+  id: string;
+}
+
+const update = async ({ customerId, status, id, amountInCents }: UpdateProps) => {
+  return await sql`
     UPDATE invoices
     SET customer_id = ${customerId}, amount = ${amountInCents}, status = ${status}
     WHERE id = ${id}
   `;
-
-  revalidatePath('/dashboard/invoices');
-  redirect('/dashboard/invoices');
 };
