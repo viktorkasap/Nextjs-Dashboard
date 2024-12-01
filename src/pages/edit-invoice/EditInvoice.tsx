@@ -1,3 +1,5 @@
+import { notFound } from 'next/navigation';
+
 import { getCustomers } from '@/entites/customer';
 import { getInvoiceById } from '@/entites/invoice';
 import { Breadcrumbs } from '@/widgets/breadcrumbs';
@@ -19,6 +21,10 @@ export const EditInvoice = async ({ ...props }: EditInvoiceProps) => {
 
   // eslint-disable-next-line no-console
   console.log({ invoice, customers });
+
+  if (!invoice) {
+    notFound();
+  }
 
   return (
     <main>
