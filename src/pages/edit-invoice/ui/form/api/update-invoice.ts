@@ -39,9 +39,8 @@ export const updateInvoice = async (invoiceId: string, formData: FormData) => {
     // eslint-disable-next-line no-console
     console.log('Update invoice error:', (error as Error).message);
 
-    return {
-      message: 'Database Error: Failed to Update Invoice.',
-    };
+    throw new Error('Failed to update invoice');
+    // return { message: 'Database Error: Failed to Update Invoice.' };
   }
 
   revalidatePath('/dashboard/invoices');

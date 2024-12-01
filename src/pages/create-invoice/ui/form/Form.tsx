@@ -1,17 +1,24 @@
+'use client';
+
+import { useActionState } from 'react';
+
 import { CheckIcon, ClockIcon, CurrencyDollarIcon, UserCircleIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 
 import { CustomerField } from '@/entites/customer';
 import { Button } from '@/shared/ui';
 
-import { createInvoice } from './api';
+import { createInvoice, State } from './api';
 
 // TODO: Add pending status for forms element
 // TODO: Add validate inputs values
 
 export const Form = ({ customers }: { customers: CustomerField[] }) => {
+  const initialState: State = { message: null, errors: {} };
+  const [state, formAction, isPending] = useActionState(createInvoice, initialState);
+
   return (
-    <form action={createInvoice}>
+    <form action={formAction}>
       <div className="rounded-md bg-gray-50 p-4 md:p-6">
         {/* Customer Name */}
         <div className="mb-4">
@@ -20,10 +27,12 @@ export const Form = ({ customers }: { customers: CustomerField[] }) => {
           </label>
           <div className="relative">
             <select
+              // required
               id="customer"
               name="customerId"
               className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
-              defaultValue="">
+              defaultValue=""
+              aria-describedby="customer-error">
               <option value="" disabled>
                 Select a customer
               </option>
@@ -35,6 +44,9 @@ export const Form = ({ customers }: { customers: CustomerField[] }) => {
             </select>
             <UserCircleIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" />
           </div>
+
+          {/* Errors */}
+          {state.errors?.customerId && <ErrorBlock errors={state.errors.customerId} id="customer-error" />}
         </div>
 
         {/* Invoice Amount */}
@@ -45,15 +57,20 @@ export const Form = ({ customers }: { customers: CustomerField[] }) => {
           <div className="relative mt-2 rounded-md">
             <div className="relative">
               <input
+                // required
                 id="amount"
                 name="amount"
                 type="number"
                 step="0.01"
                 placeholder="Enter USD amount"
+                aria-describedby="amount-error"
                 className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
               />
               <CurrencyDollarIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
             </div>
+
+            {/* Errors */}
+            {state.errors?.amount && <ErrorBlock errors={state.errors.amount} id="amount-error" />}
           </div>
         </div>
 
@@ -64,10 +81,12 @@ export const Form = ({ customers }: { customers: CustomerField[] }) => {
             <div className="flex gap-4">
               <div className="flex items-center">
                 <input
+                  // required
                   id="pending"
                   name="status"
                   type="radio"
                   value="pending"
+                  aria-describedby="status-error"
                   className="h-4 w-4 cursor-pointer border-gray-300 bg-gray-100 text-gray-600 focus:ring-2"
                 />
                 <label
@@ -78,10 +97,12 @@ export const Form = ({ customers }: { customers: CustomerField[] }) => {
               </div>
               <div className="flex items-center">
                 <input
+                  // required
                   id="paid"
                   name="status"
                   type="radio"
                   value="paid"
+                  aria-describedby="status-error"
                   className="h-4 w-4 cursor-pointer border-gray-300 bg-gray-100 text-gray-600 focus:ring-2"
                 />
                 <label
@@ -92,7 +113,13 @@ export const Form = ({ customers }: { customers: CustomerField[] }) => {
               </div>
             </div>
           </div>
+
+          {/* Errors */}
+          {state.errors?.status && <ErrorBlock errors={state.errors.status} id="status-error" />}
         </fieldset>
+
+        {/* Errors Description */}
+        {state.errors && <p className="mt-2 text-sm text-red-500">{state.message}</p>}
       </div>
       <div className="mt-6 flex justify-end gap-4">
         <Link
@@ -100,8 +127,24 @@ export const Form = ({ customers }: { customers: CustomerField[] }) => {
           className="flex h-10 items-center rounded-lg bg-gray-100 px-4 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-200">
           Cancel
         </Link>
-        <Button type="submit">Create Invoice</Button>
+        <Button disabled={isPending} type="submit">
+          Create Invoice
+        </Button>
       </div>
     </form>
   );
+};
+
+const ErrorBlock = ({ errors, id }: { errors: string[]; id: string }) => {
+  return (
+    <div id={id} aria-live="polite" aria-atomic="true">
+      {errors.map((error: string) => (
+        <ErrorText key={error} error={error} />
+      ))}
+    </div>
+  );
+};
+
+const ErrorText = ({ error }: { error: string }) => {
+  return <p className="mt-2 text-sm text-red-500">{error}</p>;
 };
