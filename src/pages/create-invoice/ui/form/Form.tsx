@@ -27,12 +27,13 @@ export const Form = ({ customers }: { customers: CustomerField[] }) => {
           </label>
           <div className="relative">
             <select
-              // required
+              required
               id="customer"
-              name="customerId"
-              className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
               defaultValue=""
-              aria-describedby="customer-error">
+              name="customerId"
+              disabled={isPending}
+              aria-describedby="customer-error"
+              className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500">
               <option value="" disabled>
                 Select a customer
               </option>
@@ -57,11 +58,12 @@ export const Form = ({ customers }: { customers: CustomerField[] }) => {
           <div className="relative mt-2 rounded-md">
             <div className="relative">
               <input
-                // required
+                required
+                step="0.01"
                 id="amount"
                 name="amount"
                 type="number"
-                step="0.01"
+                disabled={isPending}
                 placeholder="Enter USD amount"
                 aria-describedby="amount-error"
                 className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
@@ -81,11 +83,12 @@ export const Form = ({ customers }: { customers: CustomerField[] }) => {
             <div className="flex gap-4">
               <div className="flex items-center">
                 <input
-                  // required
+                  required
                   id="pending"
                   name="status"
                   type="radio"
                   value="pending"
+                  disabled={isPending}
                   aria-describedby="status-error"
                   className="h-4 w-4 cursor-pointer border-gray-300 bg-gray-100 text-gray-600 focus:ring-2"
                 />
@@ -97,11 +100,12 @@ export const Form = ({ customers }: { customers: CustomerField[] }) => {
               </div>
               <div className="flex items-center">
                 <input
-                  // required
+                  required
                   id="paid"
                   name="status"
                   type="radio"
                   value="paid"
+                  disabled={isPending}
                   aria-describedby="status-error"
                   className="h-4 w-4 cursor-pointer border-gray-300 bg-gray-100 text-gray-600 focus:ring-2"
                 />
