@@ -4,8 +4,6 @@ import { sql } from '@vercel/postgres';
 import { revalidatePath } from 'next/cache';
 
 export const deleteInvoiceById = async (id: string) => {
-  // await sql`DELETE FROM invoices WHERE id = ${id}`;
-
   try {
     await deleteAction(id);
     revalidatePath('/dashboard/invoices');
@@ -15,9 +13,8 @@ export const deleteInvoiceById = async (id: string) => {
     // eslint-disable-next-line no-console
     console.log('Delete invoice error:', (error as Error).message);
 
-    return {
-      message: 'Database Error: Failed to Create Invoice.',
-    };
+    throw new Error('Failed to delete Invoice.');
+    // return { message: 'Database Error: Failed to Delete Invoice' };
   }
 };
 
