@@ -6,12 +6,9 @@ import { CheckIcon, ClockIcon, CurrencyDollarIcon, UserCircleIcon } from '@heroi
 import Link from 'next/link';
 
 import { CustomerField } from '@/entites/customer';
-import { Button } from '@/shared/ui';
+import { Button, InputErrorBlock } from '@/shared/ui';
 
 import { createInvoice, State } from './api';
-
-// TODO: Add pending status for forms element
-// TODO: Add validate inputs values
 
 export const Form = ({ customers }: { customers: CustomerField[] }) => {
   const initialState: State = { message: null, errors: {} };
@@ -27,7 +24,7 @@ export const Form = ({ customers }: { customers: CustomerField[] }) => {
           </label>
           <div className="relative">
             <select
-              required
+              // required
               id="customer"
               defaultValue=""
               name="customerId"
@@ -47,7 +44,7 @@ export const Form = ({ customers }: { customers: CustomerField[] }) => {
           </div>
 
           {/* Errors */}
-          {state.errors?.customerId && <ErrorBlock errors={state.errors.customerId} id="customer-error" />}
+          {state.errors?.customerId && <InputErrorBlock errors={state.errors.customerId} id="customer-error" />}
         </div>
 
         {/* Invoice Amount */}
@@ -58,7 +55,7 @@ export const Form = ({ customers }: { customers: CustomerField[] }) => {
           <div className="relative mt-2 rounded-md">
             <div className="relative">
               <input
-                required
+                // required
                 step="0.01"
                 id="amount"
                 name="amount"
@@ -72,7 +69,7 @@ export const Form = ({ customers }: { customers: CustomerField[] }) => {
             </div>
 
             {/* Errors */}
-            {state.errors?.amount && <ErrorBlock errors={state.errors.amount} id="amount-error" />}
+            {state.errors?.amount && <InputErrorBlock errors={state.errors.amount} id="amount-error" />}
           </div>
         </div>
 
@@ -83,7 +80,7 @@ export const Form = ({ customers }: { customers: CustomerField[] }) => {
             <div className="flex gap-4">
               <div className="flex items-center">
                 <input
-                  required
+                  // required
                   id="pending"
                   name="status"
                   type="radio"
@@ -100,7 +97,7 @@ export const Form = ({ customers }: { customers: CustomerField[] }) => {
               </div>
               <div className="flex items-center">
                 <input
-                  required
+                  // required
                   id="paid"
                   name="status"
                   type="radio"
@@ -119,7 +116,7 @@ export const Form = ({ customers }: { customers: CustomerField[] }) => {
           </div>
 
           {/* Errors */}
-          {state.errors?.status && <ErrorBlock errors={state.errors.status} id="status-error" />}
+          {state.errors?.status && <InputErrorBlock errors={state.errors.status} id="status-error" />}
         </fieldset>
 
         {/* Errors Description */}
@@ -132,23 +129,9 @@ export const Form = ({ customers }: { customers: CustomerField[] }) => {
           Cancel
         </Link>
         <Button disabled={isPending} type="submit">
-          Create Invoice
+          {isPending ? 'Creating...' : 'Create Invoice'}
         </Button>
       </div>
     </form>
   );
-};
-
-const ErrorBlock = ({ errors, id }: { errors: string[]; id: string }) => {
-  return (
-    <div id={id} aria-live="polite" aria-atomic="true">
-      {errors.map((error: string) => (
-        <ErrorText key={error} error={error} />
-      ))}
-    </div>
-  );
-};
-
-const ErrorText = ({ error }: { error: string }) => {
-  return <p className="mt-2 text-sm text-red-500">{error}</p>;
 };

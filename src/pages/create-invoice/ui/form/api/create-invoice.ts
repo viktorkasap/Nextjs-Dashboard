@@ -20,12 +20,12 @@ export type State = {
 
 const FormDataSchema = z.object({
   id: z.string(),
+  date: z.string(),
   customerId: z.string({ invalid_type_error: 'Please select a customer.' }),
   amount: z.coerce.number().gt(0, { message: 'Please enter an amount greater than $0.' }), // gt - Greater Then
   status: z.enum([EInvoiceStatus.Pending, EInvoiceStatus.Paid], {
     invalid_type_error: 'Please select an invoice status.',
   }),
-  date: z.string(),
 });
 
 const CreateInvoiceSchema = FormDataSchema.omit({ id: true, date: true });
@@ -43,7 +43,7 @@ export const createInvoice = async (_prevState: State, formData: FormData) => {
   if (!validatedFields.success) {
     return {
       errors: validatedFields.error.flatten().fieldErrors,
-      message: 'Missing Fields. Railed to Create Invoice',
+      message: 'Missing Fields. Failed to Create Invoice',
     };
   }
 

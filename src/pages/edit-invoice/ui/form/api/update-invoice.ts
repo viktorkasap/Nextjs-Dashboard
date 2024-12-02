@@ -7,31 +7,52 @@ import { z } from 'zod';
 
 import { EInvoiceStatus, InvoiceStatus } from '@/entites/invoice';
 
+type StateErrors = {
+  customerId?: string[];
+  amount?: string[];
+  status?: string[];
+};
+
+export type State = {
+  errors?: StateErrors;
+  message?: string | null;
+};
+
 const FormDataSchema = z.object({
   id: z.string(),
-  customerId: z.string(),
-  amount: z.coerce.number(),
-  status: z.enum([EInvoiceStatus.Pending, EInvoiceStatus.Paid]),
   date: z.string(),
+  customerId: z.string({ invalid_type_error: 'Please select a customer.' }),
+  amount: z.coerce.number().gt(0, { message: 'Please enter an amount greater than $0.' }), // gt - Greater Then
+  status: z.enum([EInvoiceStatus.Pending, EInvoiceStatus.Paid], {
+    invalid_type_error: 'Please select an invoice status.',
+  }),
 });
 
-const CreateInvoiceSchema = FormDataSchema.omit({ date: true });
+const CreateInvoiceSchema = FormDataSchema.omit({ id: true, date: true });
 
-export const updateInvoice = async (invoiceId: string, formData: FormData) => {
+export const updateInvoice = async (id: string, _prevState: State, formData: FormData) => {
+  // Fake delay
   await new Promise((resolve) => setTimeout(resolve, 3000));
 
-  const { customerId, amount, status, id } = CreateInvoiceSchema.parse({
+  const validatedFields = CreateInvoiceSchema.safeParse({
     customerId: formData.get('customerId'),
     amount: formData.get('amount'),
     status: formData.get('status'),
-    id: formData.get('invoiceId'), // double of `invoiceId` props for debugging
   });
 
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: 'Missing Fields. Failed to Update Invoice',
+    };
+  }
+
+  const { customerId, amount, status } = validatedFields.data;
   const amountInCents = amount * 100;
   const date = new Date().toDateString().split('T')[0];
 
   // eslint-disable-next-line no-console
-  console.log('Updated invoice data:', { customerId, amount, amountInCents, status, date, invoiceId, id });
+  console.log('Updated invoice data:', { customerId, amount, amountInCents, status, date, id });
 
   try {
     await update({ customerId, status, id, amountInCents });
@@ -39,8 +60,8 @@ export const updateInvoice = async (invoiceId: string, formData: FormData) => {
     // eslint-disable-next-line no-console
     console.log('Update invoice error:', (error as Error).message);
 
-    throw new Error('Failed to update invoice');
-    // return { message: 'Database Error: Failed to Update Invoice.' };
+    // throw new Error('Failed to update invoice');
+    return { message: 'Database Error: Failed to Update Invoice.' };
   }
 
   revalidatePath('/dashboard/invoices');
