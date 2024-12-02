@@ -38,8 +38,8 @@ export const Form = ({ invoice, customers }: FormProps) => {
               id="customer"
               name="customerId"
               disabled={isPending}
-              className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
-              defaultValue={currentCustomer?.id}>
+              defaultValue={currentCustomer?.id}
+              className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500">
               <option value="" disabled>
                 Select a customer
               </option>
