@@ -5,7 +5,7 @@ import { revalidatePath } from 'next/cache';
 
 export const deleteInvoiceById = async (id: string) => {
   try {
-    await deleteAction(id);
+    await queryDeleteAction(id);
     revalidatePath('/dashboard/invoices');
 
     return { message: 'Deleted Invoice.' };
@@ -18,6 +18,6 @@ export const deleteInvoiceById = async (id: string) => {
   }
 };
 
-const deleteAction = async (id: string) => {
+const queryDeleteAction = async (id: string) => {
   return await sql`DELETE FROM invoices WHERE id = ${id}`;
 };

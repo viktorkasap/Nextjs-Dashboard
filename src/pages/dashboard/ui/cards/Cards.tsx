@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 
-import { getCardsData } from '@/entites/cards';
+import { queryCardsData } from '@/entites/cards';
 import { CardSkeleton } from '@/shared/ui';
 import { Card } from '@/widgets/cards';
 
@@ -13,7 +13,7 @@ export const Cards = () => {
 };
 
 const CardsView = async () => {
-  const cardsData = await getCardsData();
+  const cardsData = await queryCardsData();
 
   return (
     <>

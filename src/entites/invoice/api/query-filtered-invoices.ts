@@ -9,7 +9,7 @@ interface GetFilteredInvoicesProps {
   currentPage: number;
 }
 
-export const getFilteredInvoices = async ({ query, currentPage }: GetFilteredInvoicesProps) => {
+export const queryFilteredInvoices = async ({ query, currentPage }: GetFilteredInvoicesProps) => {
   const offset = (currentPage - 1) * ITEMS_PER_PAGE;
 
   try {

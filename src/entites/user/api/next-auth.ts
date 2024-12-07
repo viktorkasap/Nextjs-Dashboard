@@ -5,7 +5,7 @@ import { z } from 'zod';
 
 import { authConfig } from '../config';
 
-import { getUser } from './get-user';
+import { queryUser } from './query-user';
 
 export const { auth, signIn, signOut } = NextAuth({
   ...authConfig,
@@ -21,7 +21,7 @@ export const { auth, signIn, signOut } = NextAuth({
 
         if (parsedCredentials.success) {
           const { email, password } = parsedCredentials.data;
-          const user = await getUser(email);
+          const user = await queryUser(email);
 
           if (!user) {
             return null;

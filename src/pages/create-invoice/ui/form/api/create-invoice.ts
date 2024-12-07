@@ -55,7 +55,7 @@ export const createInvoice = async (_prevState: State, formData: FormData) => {
   console.log('Created invoice data:', { customerId, amount, amountInCents, status, date });
 
   try {
-    await create({ customerId, status, amountInCents, date });
+    await queryCreate({ customerId, status, amountInCents, date });
   } catch (error) {
     // eslint-disable-next-line no-console
     console.log('Create invoice error:', (error as Error).message);
@@ -75,7 +75,7 @@ interface CreateProps {
   date: string;
 }
 
-const create = async ({ customerId, amountInCents, status, date }: CreateProps) => {
+const queryCreate = async ({ customerId, amountInCents, status, date }: CreateProps) => {
   return await sql`
     INSERT INTO invoices (customer_id, amount, status, date)
     VALUES (${customerId}, ${amountInCents}, ${status}, ${date})

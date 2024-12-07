@@ -1,1 +1,1 @@
-export { getCustomers } from './get-customers';
+export { queryCustomers } from './query-customers';

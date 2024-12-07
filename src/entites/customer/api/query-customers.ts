@@ -2,7 +2,7 @@ import { sql } from '@vercel/postgres';
 
 import { CustomerField } from '@/entites/customer';
 
-export const getCustomers = async () => {
+export const queryCustomers = async () => {
   try {
     const data = await sql<CustomerField>`
       SELECT

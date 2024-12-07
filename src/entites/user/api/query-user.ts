@@ -2,7 +2,7 @@ import { sql } from '@vercel/postgres';
 
 import { User } from '../types';
 
-export const getUser = async (email: string): Promise<User | undefined> => {
+export const queryUser = async (email: string): Promise<User | undefined> => {
   try {
     const user = await sql<User>`SELECT * FROM users WHERE email=${email}`;
 

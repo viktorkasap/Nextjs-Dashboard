@@ -3,7 +3,7 @@ import { sql } from '@vercel/postgres';
 import { formatCurrency } from '@/shared/lib';
 
 import { LatestInvoiceRaw } from '../types';
-export async function getLatestInvoices() {
+export async function queryLatestInvoices() {
   try {
     const data = await sql<LatestInvoiceRaw>`
       SELECT invoices.amount, customers.name, customers.image_url, customers.email, invoices.id

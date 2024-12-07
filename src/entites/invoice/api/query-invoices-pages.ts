@@ -2,7 +2,7 @@ import { sql } from '@vercel/postgres';
 
 import { ITEMS_PER_PAGE } from '../constants';
 
-export const getInvoicesPages = async (query: string) => {
+export const queryInvoicesPages = async (query: string) => {
   try {
     const count = await sql`SELECT COUNT(*)
     FROM invoices

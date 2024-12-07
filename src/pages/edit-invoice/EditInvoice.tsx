@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 
-import { getCustomers } from '@/entites/customer';
-import { getInvoiceById } from '@/entites/invoice';
+import { queryCustomers } from '@/entites/customer';
+import { queryInvoiceById } from '@/entites/invoice';
 import { Breadcrumbs } from '@/widgets/breadcrumbs';
 
 import { Form } from './ui';
@@ -17,7 +17,7 @@ interface EditInvoiceProps {
 
 export const EditInvoice = async ({ ...props }: EditInvoiceProps) => {
   const { id } = await props.params;
-  const [invoice, customers] = await Promise.all([getInvoiceById(id), getCustomers()]);
+  const [invoice, customers] = await Promise.all([queryInvoiceById(id), queryCustomers()]);
 
   // eslint-disable-next-line no-console
   console.log({ invoice, customers });

@@ -1,1 +1,1 @@
-export { getCardsData } from './get-cards-data';
+export { queryCardsData } from './query-cards-data';

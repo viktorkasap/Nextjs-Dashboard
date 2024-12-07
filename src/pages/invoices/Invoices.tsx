@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 
-import { getInvoicesPages } from '@/entites/invoice';
+import { queryInvoicesPages } from '@/entites/invoice';
 import { Pagination } from '@/pages/invoices/ui/pagination';
 import { lusitana } from '@/shared/assets';
 
@@ -23,7 +23,7 @@ export const Invoices = async (props: InvoicesPageProps) => {
 
   const query = searchParams?.query || '';
   const currentPage = Number(searchParams?.page) || 1;
-  const totalPages = await getInvoicesPages(query);
+  const totalPages = await queryInvoicesPages(query);
 
   return (
     <main className="w-full">

@@ -1,1 +1,1 @@
-export { getRevenue } from './get-revenue';
+export { queryRevenue } from './query-revenue';

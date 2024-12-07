@@ -2,7 +2,7 @@ import { ComponentType, Suspense } from 'react';
 
 import Image from 'next/image';
 
-import { getFilteredInvoices } from '@/entites/invoice';
+import { queryFilteredInvoices } from '@/entites/invoice';
 import { formatCurrency, formatDateToLocal } from '@/shared/lib';
 import { InvoicesTableSkeleton } from '@/shared/ui';
 
@@ -33,7 +33,7 @@ export const Table = ({ query, currentPage, UpdateInvoice, StatusInvoice, Delete
 };
 
 const TableView = async ({ query, currentPage, UpdateInvoice, DeleteInvoice, StatusInvoice }: TableProps) => {
-  const invoices = await getFilteredInvoices({ query, currentPage });
+  const invoices = await queryFilteredInvoices({ query, currentPage });
 
   return (
     <div className="mt-6 flow-root">

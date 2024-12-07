@@ -1,4 +1,4 @@
-import { getCustomers } from '@/entites/customer';
+import { queryCustomers } from '@/entites/customer';
 import { Breadcrumbs } from '@/widgets/breadcrumbs';
 
 import { Form } from './ui';
@@ -9,7 +9,7 @@ const breadcrumbs = [
 ];
 
 export const CreateInvoice = async () => {
-  const customers = await getCustomers();
+  const customers = await queryCustomers();
 
   return (
     <main>

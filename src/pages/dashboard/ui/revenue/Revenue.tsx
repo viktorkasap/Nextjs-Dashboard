@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 
-import { getRevenue } from '@/entites/revenue';
+import { queryRevenue } from '@/entites/revenue';
 import { RevenueChartSkeleton } from '@/shared/ui';
 import { RevenueChart } from '@/widgets/revenue-chart';
 
@@ -13,7 +13,7 @@ export const Revenue = async () => {
 };
 
 const RevenueChartView = async () => {
-  const revenue = await getRevenue();
+  const revenue = await queryRevenue();
 
   return <RevenueChart revenue={revenue} />;
 };

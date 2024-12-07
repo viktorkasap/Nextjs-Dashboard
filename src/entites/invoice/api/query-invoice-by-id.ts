@@ -2,7 +2,7 @@ import { sql } from '@vercel/postgres';
 
 import { Invoice } from '../types';
 
-export const getInvoiceById = async (id: string): Promise<Invoice> => {
+export const queryInvoiceById = async (id: string): Promise<Invoice> => {
   try {
     const data = await sql<Invoice>`
       SELECT

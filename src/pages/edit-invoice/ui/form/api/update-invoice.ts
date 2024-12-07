@@ -55,7 +55,7 @@ export const updateInvoice = async (id: string, _prevState: State, formData: For
   console.log('Updated invoice data:', { customerId, amount, amountInCents, status, date, id });
 
   try {
-    await update({ customerId, status, id, amountInCents });
+    await queryUpdate({ customerId, status, id, amountInCents });
   } catch (error) {
     // eslint-disable-next-line no-console
     console.log('Update invoice error:', (error as Error).message);
@@ -75,7 +75,7 @@ interface UpdateProps {
   id: string;
 }
 
-const update = async ({ customerId, status, id, amountInCents }: UpdateProps) => {
+const queryUpdate = async ({ customerId, status, id, amountInCents }: UpdateProps) => {
   return await sql`
     UPDATE invoices
     SET customer_id = ${customerId}, amount = ${amountInCents}, status = ${status}

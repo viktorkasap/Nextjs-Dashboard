@@ -2,7 +2,7 @@ import { sql } from '@vercel/postgres';
 
 import { formatCurrency } from '@/shared/lib';
 
-export async function getCardsData() {
+export async function queryCardsData() {
   try {
     // You can probably combine these into a single SQL query
     // However, we are intentionally splitting them to demonstrate

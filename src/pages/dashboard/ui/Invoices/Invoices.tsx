@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 
-import { getLatestInvoices } from '@/entites/invoice';
+import { queryLatestInvoices } from '@/entites/invoice';
 import { InvoiceSkeleton } from '@/shared/ui';
 import { LatestInvoices } from '@/widgets/latest-invoices';
 
@@ -13,7 +13,7 @@ export const Invoices = () => {
 };
 
 const InvoicesView = async () => {
-  const latestInvoices = await getLatestInvoices();
+  const latestInvoices = await queryLatestInvoices();
 
   return <LatestInvoices latestInvoices={latestInvoices} />;
 };

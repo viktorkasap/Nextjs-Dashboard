@@ -2,7 +2,7 @@ import { sql } from '@vercel/postgres';
 
 import { Revenue } from '../types';
 
-export async function getRevenue() {
+export async function queryRevenue() {
   const start = performance.now();
 
   try {
