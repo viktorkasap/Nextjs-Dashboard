@@ -1,1 +1,1 @@
-export { InvoicesPage as default } from '@/pages';
+export { InvoicesPage as default, invoicesMetadata as metadata } from '@/pages';

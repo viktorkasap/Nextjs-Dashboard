@@ -5,7 +5,10 @@ import { Metadata } from 'next';
 import { SidebarNav } from '@/widgets/sidebar-nav';
 
 export const metadata: Metadata = {
-  title: 'Dashboard Page',
+  title: {
+    template: '%s | Acme Dashboard',
+    default: 'Dashboard',
+  },
   description: 'Dashboard',
 };
 

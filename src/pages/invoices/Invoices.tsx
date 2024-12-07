@@ -1,8 +1,15 @@
+import { Metadata } from 'next';
+
 import { getInvoicesPages } from '@/entites/invoice';
 import { Pagination } from '@/pages/invoices/ui/pagination';
 import { lusitana } from '@/shared/assets';
 
 import { SearchBar, CreateInvoiceButton, Table, DeleteInvoice, UpdateInvoice, StatusInvoice } from './ui';
+
+export const metadata: Metadata = {
+  title: 'Invoices',
+  description: 'Invoices',
+};
 
 interface InvoicesPageProps {
   searchParams?: Promise<{
