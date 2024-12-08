@@ -2,7 +2,7 @@ import { Suspense } from 'react';
 
 import Image from 'next/image';
 
-import { Customer, CustomerTable, queryFilteredCustomers } from '@/entites/customer';
+import { CustomerTable, queryFilteredCustomers } from '@/entites/customer';
 import { formatCurrency } from '@/shared/lib';
 import { CustomersTableSkeleton } from '@/shared/ui';
 
