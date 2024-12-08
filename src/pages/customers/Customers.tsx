@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 
 import { queryCustomersPages } from '@/entites/customer';
+import { SearchBar } from '@/features/search-bar';
 import { lusitana } from '@/shared/assets';
 
 import { Table } from './ui';
@@ -30,7 +31,7 @@ export const Customers = async (props: CustomersProps) => {
         <h1 className={`${lusitana.className} text-2xl`}>Customers</h1>
       </div>
       <div className="mt-4 flex items-center justify-between gap-2 md:mt-8">
-        <p>search bar</p>
+        <SearchBar placeholder="Search customer..." />
         <p>add customer</p>
       </div>
       <Table query={query} currentPage={currentPage} />

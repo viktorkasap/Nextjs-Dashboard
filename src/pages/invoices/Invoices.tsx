@@ -1,10 +1,11 @@
 import { Metadata } from 'next';
 
 import { queryInvoicesPages } from '@/entites/invoice';
+import { SearchBar } from '@/features/search-bar';
 import { Pagination } from '@/pages/invoices/ui/pagination';
 import { lusitana } from '@/shared/assets';
 
-import { SearchBar, CreateInvoiceButton, Table, DeleteInvoice, UpdateInvoice, StatusInvoice } from './ui';
+import { CreateInvoiceButton, Table, DeleteInvoice, UpdateInvoice, StatusInvoice } from './ui';
 
 export const metadata: Metadata = {
   title: 'Invoices',
