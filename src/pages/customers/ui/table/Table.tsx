@@ -2,7 +2,8 @@ import { Suspense } from 'react';
 
 import Image from 'next/image';
 
-import { Customer, queryFilteredCustomers } from '@/entites/customer';
+import { Customer, CustomerTable, queryFilteredCustomers } from '@/entites/customer';
+import { formatCurrency } from '@/shared/lib';
 import { CustomersTableSkeleton } from '@/shared/ui';
 
 interface TableProps {
@@ -38,7 +39,11 @@ const TableView = async ({ query, currentPage }: TableProps) => {
 };
 
 interface TableContentProps {
-  customers: Customer[];
+  customers: CustomerTable[];
+}
+
+interface TableRowProps {
+  customer: CustomerTable;
 }
 
 // Table Desktop
@@ -74,7 +79,7 @@ const TableDesktop = ({ customers }: TableContentProps) => {
   );
 };
 
-const DesktopTableRow = ({ customer }: { customer: Customer }) => {
+const DesktopTableRow = ({ customer }: TableRowProps) => {
   return (
     <tr key={customer.id} className="group">
       <td className="whitespace-nowrap bg-white py-5 pl-4 pr-3 text-sm text-black group-first-of-type:rounded-md group-last-of-type:rounded-md sm:pl-6">
@@ -84,10 +89,10 @@ const DesktopTableRow = ({ customer }: { customer: Customer }) => {
         </div>
       </td>
       <td className="whitespace-nowrap bg-white px-4 py-5 text-sm">{customer.email}</td>
-      <td className="whitespace-nowrap bg-white px-4 py-5 text-sm">{/* {customer.total_invoices} */}</td>
-      <td className="whitespace-nowrap bg-white px-4 py-5 text-sm">{/* {customer.total_pending} */}</td>
+      <td className="whitespace-nowrap bg-white px-4 py-5 text-sm"> {customer.totalInvoices}</td>
+      <td className="whitespace-nowrap bg-white px-4 py-5 text-sm">{formatCurrency(customer.totalPending)}</td>
       <td className="whitespace-nowrap bg-white px-4 py-5 text-sm group-first-of-type:rounded-md group-last-of-type:rounded-md">
-        {/* {customer.total_paid} */}
+        {formatCurrency(customer.totalPaid)}
       </td>
     </tr>
   );
@@ -102,7 +107,7 @@ const TableMobile = ({ customers }: TableContentProps) => {
   );
 };
 
-const MobileTableRow = ({ customer }: { customer: Customer }) => {
+const MobileTableRow = ({ customer }: TableRowProps) => {
   return (
     <div key={customer.id} className="mb-2 w-full rounded-md bg-white p-4">
       <div className="flex items-center justify-between border-b pb-4">
@@ -119,14 +124,16 @@ const MobileTableRow = ({ customer }: { customer: Customer }) => {
       <div className="flex w-full items-center justify-between border-b py-5">
         <div className="flex w-1/2 flex-col">
           <p className="text-xs">Pending</p>
-          {/* <p className="font-medium">{customer.total_pending}</p> */}
+          <p className="font-medium">{formatCurrency(customer.totalPending)}</p>
         </div>
         <div className="flex w-1/2 flex-col">
           <p className="text-xs">Paid</p>
-          {/* <p className="font-medium">{customer.total_paid}</p> */}
+          <p className="font-medium">{formatCurrency(customer.totalPaid)}</p>
         </div>
       </div>
-      <div className="pt-4 text-sm">{/* <p>{customer.total_invoices} invoices</p> */}</div>
+      <div className="pt-4 text-sm">
+        <p>{customer.totalInvoices} invoices</p>
+      </div>
     </div>
   );
 };
