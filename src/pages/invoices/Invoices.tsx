@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 interface InvoicesPageProps {
   searchParams?: Promise<{
     query?: string;
-    page?: number;
+    page?: string;
   }>;
 }
 

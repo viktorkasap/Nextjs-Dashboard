@@ -1,0 +1,1 @@
+export { CustomersTableSkeleton } from './CustomersTableSkeleton';

@@ -1,8 +1,7 @@
 import { sql } from '@vercel/postgres';
 
-import { InvoicesTable } from '@/entites/invoice';
-
 import { ITEMS_PER_PAGE } from '../constants';
+import { InvoicesTable } from '../types';
 
 interface GetFilteredInvoicesProps {
   query: string;

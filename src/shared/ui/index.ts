@@ -8,3 +8,4 @@ export { TableRowSkeleton } from './table-row-skeleton';
 export { InvoicesMobileSkeleton } from './invoices-mobile-skeleton';
 export { InvoicesTableSkeleton } from './invoices-table-skeleton';
 export { InputErrorBlock } from './input-error-block';
+export { CustomersTableSkeleton } from './customer-table-skeleton';

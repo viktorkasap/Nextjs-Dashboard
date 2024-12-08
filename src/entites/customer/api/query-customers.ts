@@ -1,6 +1,6 @@
 import { sql } from '@vercel/postgres';
 
-import { CustomerField } from '@/entites/customer';
+import { CustomerField } from '../types';
 
 export const queryCustomers = async () => {
   try {
@@ -12,9 +12,7 @@ export const queryCustomers = async () => {
       ORDER BY name ASC
     `;
 
-    const customers = data.rows;
-
-    return customers;
+    return data.rows;
   } catch (err) {
     // eslint-disable-next-line no-console
     console.error('Database Error:', err);
