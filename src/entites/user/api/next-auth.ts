@@ -29,9 +29,6 @@ export const { auth, signIn, signOut } = NextAuth({
 
           // Check password matching
           const passwordMatch = await bcrypt.compare(password, user.password);
-          // eslint-disable-next-line no-console
-          console.log('Bcrypt 123456', ':', bcrypt.hash('123456', 'tLHt0yv52FTJPc0gRB7WHUERvErBxprPS+5NiNmaE7M='));
-
           if (passwordMatch) {
             return user;
           }
