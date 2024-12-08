@@ -9,6 +9,9 @@ interface GetFilteredCustomersProps {
 }
 
 export const queryFilteredCustomers = async ({ query, currentPage }: GetFilteredCustomersProps) => {
+  // Fake delay
+  await new Promise((resolve) => setTimeout(resolve, 3000));
+
   const offset = (currentPage - 1) * ITEMS_PER_PAGE;
 
   try {

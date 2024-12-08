@@ -11,6 +11,8 @@ interface TableProps {
 }
 
 export const Table = ({ query, currentPage }: TableProps) => {
+  // FIXME: Update Customer Table Skeleton properly
+
   return (
     <Suspense key={query + currentPage} fallback={<CustomersTableSkeleton />}>
       <TableView query={query} currentPage={currentPage} />
@@ -35,12 +37,12 @@ const TableView = async ({ query, currentPage }: TableProps) => {
   );
 };
 
-interface TableViewProps {
+interface TableContentProps {
   customers: Customer[];
 }
 
 // Table Desktop
-const TableDesktop = ({ customers }: TableViewProps) => {
+const TableDesktop = ({ customers }: TableContentProps) => {
   return (
     <table className="hidden min-w-full rounded-md text-gray-900 md:table">
       <thead className="rounded-md bg-gray-50 text-left text-sm font-normal">
@@ -92,7 +94,7 @@ const DesktopTableRow = ({ customer }: { customer: Customer }) => {
 };
 
 // Table Mobile
-const TableMobile = ({ customers }: TableViewProps) => {
+const TableMobile = ({ customers }: TableContentProps) => {
   return (
     <div className="md:hidden">
       {customers?.map((customer) => <MobileTableRow key={`${customer.name}-${customer.email}-mob`} customer={customer} />)}
