@@ -1,8 +1,10 @@
 import { Metadata } from 'next';
 
 import { queryInvoicesPages } from '@/entites/invoice';
+// ! FIXME: Split imports - add rule
+import { Pagination } from '@/features/pagination';
 import { SearchBar } from '@/features/search-bar';
-import { Pagination } from '@/pages/invoices/ui/pagination';
+// ! FIXME: Split imports - add rule
 import { lusitana } from '@/shared/assets';
 
 import { CreateInvoiceButton, Table, DeleteInvoice, UpdateInvoice, StatusInvoice } from './ui';

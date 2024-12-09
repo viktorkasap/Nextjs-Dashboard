@@ -1,7 +1,10 @@
 import { Metadata } from 'next';
 
 import { queryCustomersPages } from '@/entites/customer';
+// ! FIXME: Split imports - add rule
+import { Pagination } from '@/features/pagination';
 import { SearchBar } from '@/features/search-bar';
+// ! FIXME: Split imports - add rule
 import { lusitana } from '@/shared/assets';
 
 import { Table } from './ui';
@@ -32,12 +35,12 @@ export const Customers = async (props: CustomersProps) => {
       </div>
       <div className="mt-4 flex items-center justify-between gap-2 md:mt-8">
         <SearchBar placeholder="Search customer..." />
+        {/* 1 */}
         <p>add customer</p>
       </div>
       <Table query={query} currentPage={currentPage} />
-      <p>
-        Pagination [{currentPage}] of {totalPages}
-      </p>
+
+      <Pagination totalPages={totalPages} />
     </main>
   );
 };
