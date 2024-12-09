@@ -1,7 +1,7 @@
 import { sql } from '@vercel/postgres';
 
 import { ITEMS_PER_PAGE } from '../constants';
-import { Customer, CustomerTable } from '../types';
+import { CustomerTable } from '../types';
 
 interface GetFilteredCustomersProps {
   query: string;
