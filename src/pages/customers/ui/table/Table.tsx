@@ -11,6 +11,8 @@ interface TableProps {
   currentPage: number;
 }
 
+// TODO: Add edit customer button + page
+
 export const Table = ({ query, currentPage }: TableProps) => {
   // FIXME: Update Customer Table Skeleton properly
 
@@ -137,3 +139,22 @@ const MobileTableRow = ({ customer }: TableRowProps) => {
     </div>
   );
 };
+
+/* FIXME: Image URL
+function isValidUrl(url: string) {
+  try {
+    return Boolean(new URL(url)); // Проверяет, является ли строка корректным URL
+  } catch (error) {
+    return false;
+  }
+}
+
+// Использование в компоненте
+<Image
+  width={28}
+  height={28}
+  src={isValidUrl(customer.image_url) ? customer.image_url : '/placeholder.png'}
+  className="rounded-full"
+  alt={`${customer.name}'s profile picture`}
+/>
+ */

@@ -1,4 +1,4 @@
-// import { db } from '@vercel/postgres';
+import { db } from '@vercel/postgres';
 // import bcrypt from 'bcrypt';
 
 // import { invoices, customers, revenue, users } from '@/shared/mock';
@@ -122,6 +122,32 @@
 //     return Response.json({ error }, { status: 500 });
 //   }
 // }
+
+// Add to customers table CREATED_AT & UPDATED_AT
+// await client.sql`
+//   ALTER TABLE customers
+//   ADD COLUMN created_at TIMESTAMP DEFAULT NOW(),
+//   ADD COLUMN updated_at TIMESTAMP DEFAULT NOW();
+// `;
+//
+// await client.sql`
+//   CREATE OR REPLACE FUNCTION update_updated_at_column()
+//   RETURNS TRIGGER AS $$
+//   BEGIN
+//     NEW.updated_at = NOW();
+//     RETURN NEW;
+//   END;
+//   $$ LANGUAGE plpgsql;
+// `;
+//
+// await client.sql`
+//   CREATE TRIGGER set_updated_at
+//   BEFORE UPDATE ON customers
+//   FOR EACH ROW
+//   EXECUTE FUNCTION update_updated_at_column();
+// `;
+//
+// client.release();
 
 export async function GET() {
   return Response.json({

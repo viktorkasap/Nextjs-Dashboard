@@ -5,3 +5,4 @@ export { InvoicesPage, metadata as invoicesMetadata } from './invoices';
 export { CreateInvoicePage } from './create-invoice';
 export { EditInvoicePage } from './edit-invoice';
 export { LoginPage } from './login';
+export { CreateCustomerPage } from './create-customer';

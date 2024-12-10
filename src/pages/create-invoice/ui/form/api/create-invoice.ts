@@ -19,8 +19,8 @@ export type State = {
 };
 
 const FormDataSchema = z.object({
-  id: z.string(),
-  date: z.string(),
+  // id: z.string(),
+  // date: z.string(),
   customerId: z.string({ invalid_type_error: 'Please select a customer.' }),
   amount: z.coerce.number().gt(0, { message: 'Please enter an amount greater than $0.' }), // gt - Greater Then
   status: z.enum([EInvoiceStatus.Pending, EInvoiceStatus.Paid], {
@@ -28,7 +28,8 @@ const FormDataSchema = z.object({
   }),
 });
 
-const CreateInvoiceSchema = FormDataSchema.omit({ id: true, date: true });
+// const CreateInvoiceSchema = FormDataSchema.omit({ id: true, date: true });
+const CreateInvoiceSchema = FormDataSchema;
 
 export const createInvoice = async (_prevState: State, formData: FormData) => {
   // Fake delay
@@ -68,14 +69,14 @@ export const createInvoice = async (_prevState: State, formData: FormData) => {
   redirect('/dashboard/invoices');
 };
 
-interface CreateProps {
+interface QueryCreateProps {
   customerId: string;
   amountInCents: number;
   status: InvoiceStatus;
   date: string;
 }
 
-const queryCreate = async ({ customerId, amountInCents, status, date }: CreateProps) => {
+const queryCreate = async ({ customerId, amountInCents, status, date }: QueryCreateProps) => {
   return await sql`
     INSERT INTO invoices (customer_id, amount, status, date)
     VALUES (${customerId}, ${amountInCents}, ${status}, ${date})
