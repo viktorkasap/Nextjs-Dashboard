@@ -1,17 +1,18 @@
 import { Suspense } from 'react';
 
-import Image from 'next/image';
-
 import { CustomerTable, queryFilteredCustomers } from '@/entites/customer';
 import { formatCurrency } from '@/shared/lib';
 import { CustomersTableSkeleton } from '@/shared/ui';
+
+// eslint-disable-next-line no-unused-vars,@typescript-eslint/no-unused-vars
+import { CustomerAvatarClient, CustomerAvatarServer } from './ui';
 
 interface TableProps {
   query: string;
   currentPage: number;
 }
 
-// TODO: Add edit customer button + page
+// 1) TODO: Add edit customer button + page
 
 export const Table = ({ query, currentPage }: TableProps) => {
   // FIXME: Update Customer Table Skeleton properly
@@ -86,7 +87,10 @@ const DesktopTableRow = ({ customer }: TableRowProps) => {
     <tr key={customer.id} className="group">
       <td className="whitespace-nowrap bg-white py-5 pl-4 pr-3 text-sm text-black group-first-of-type:rounded-md group-last-of-type:rounded-md sm:pl-6">
         <div className="flex items-center gap-3">
-          <Image src={customer.image_url} className="rounded-full" alt={`${customer.name}'s profile picture`} width={28} height={28} />
+          {/* Server component */}
+          <CustomerAvatarServer name={customer.name} src={customer.image_url} />
+          {/* Client component */}
+          {/* <CustomerAvatarClient name={customer.name} src={customer.image_url} /> */}
           <p>{customer.name}</p>
         </div>
       </td>
@@ -116,8 +120,10 @@ const MobileTableRow = ({ customer }: TableRowProps) => {
         <div>
           <div className="mb-2 flex items-center">
             <div className="flex items-center gap-3">
-              <Image width={28} height={28} src={customer.image_url} className="rounded-full" alt={`${customer.name}'s profile picture`} />
-              <p>{customer.name}</p>
+              {/* Server component */}
+              <CustomerAvatarServer name={customer.name} src={customer.image_url} />
+              {/* Client component */}
+              {/* <CustomerAvatarClient name={customer.name} src={customer.image_url} /> */} <p>{customer.name}</p>
             </div>
           </div>
           <p className="text-sm text-gray-500">{customer.email}</p>
@@ -139,22 +145,3 @@ const MobileTableRow = ({ customer }: TableRowProps) => {
     </div>
   );
 };
-
-/* FIXME: Image URL
-function isValidUrl(url: string) {
-  try {
-    return Boolean(new URL(url)); // Проверяет, является ли строка корректным URL
-  } catch (error) {
-    return false;
-  }
-}
-
-// Использование в компоненте
-<Image
-  width={28}
-  height={28}
-  src={isValidUrl(customer.image_url) ? customer.image_url : '/placeholder.png'}
-  className="rounded-full"
-  alt={`${customer.name}'s profile picture`}
-/>
- */
