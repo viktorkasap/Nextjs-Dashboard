@@ -12,6 +12,7 @@ interface TableProps {
   currentPage: number;
 }
 
+// 1) TODO: Add delete customer button
 // 1) TODO: Add edit customer button + page
 
 export const Table = ({ query, currentPage }: TableProps) => {

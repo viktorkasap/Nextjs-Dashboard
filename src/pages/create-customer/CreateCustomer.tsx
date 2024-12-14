@@ -7,7 +7,7 @@ const breadcrumbs = [
   { label: 'Create Customer', href: '/dashboard/customers/create', active: true },
 ];
 
-export const CreateCustomer = async () => {
+export const CreateCustomer = () => {
   return (
     <main>
       <Breadcrumbs breadcrumbs={breadcrumbs} />
