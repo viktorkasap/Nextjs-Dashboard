@@ -25,8 +25,9 @@ export const Table = ({ query, currentPage }: TableProps) => {
 // TODO:
 //  OK 2) Add CustomerAvatar
 //  OK 3) Split tables for mobile and desktop
-//  1) Add pending status for row while delete invoice
-//  4) Add customer delete pending as well as invoices
+//  OK 4) Add row context for deleting
+//  OK 5) Add pending status for row while delete invoice
+//  6) Add customer delete pending as well as invoices
 
 const TableView = async ({ query, currentPage }: TableProps) => {
   const invoices = await queryFilteredInvoices({ query, currentPage });

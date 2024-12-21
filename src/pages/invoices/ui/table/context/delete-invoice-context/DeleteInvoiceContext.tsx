@@ -7,7 +7,11 @@ interface DeleteInvoiceContextData {
   setIsDeleting: (_isDeleting: boolean) => void;
 }
 
-// Context
+/**
+ * Context for managing the deletion of invoices within the application.
+ *
+ * 💅 Helps show the UI effect of deleting an invoice in an entire table row.
+ */
 export const DeleteInvoiceContext = createContext<DeleteInvoiceContextData | undefined>(undefined);
 
 // Provider
