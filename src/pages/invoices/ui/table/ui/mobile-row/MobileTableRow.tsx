@@ -5,6 +5,7 @@ import { ReactNode, ComponentType, useState } from 'react';
 import clsx from 'clsx';
 
 import { InvoicesTable } from '@/entites/invoice';
+import { useDeleteInvoiceContext } from '@/pages/invoices/ui/table/context';
 import { formatCurrency, formatDateToLocal } from '@/shared/lib';
 
 import { DeleteInvoiceProps } from '../../types';
@@ -24,7 +25,7 @@ export const MobileTableRow = ({
   renderUpdateInvoice,
   DeleteInvoice,
 }: MobileTableRowProps) => {
-  const [isDeleting, setIsDeleting] = useState(false);
+  const { isDeleting } = useDeleteInvoiceContext();
 
   return (
     <div className={clsx('mb-2 w-full rounded-md bg-white p-4', { 'opacity-50': isDeleting })}>
@@ -45,7 +46,7 @@ export const MobileTableRow = ({
         </div>
         <div className="flex justify-end gap-2">
           {renderUpdateInvoice}
-          <DeleteInvoice id={invoice.id} onDeletePending={setIsDeleting} />
+          <DeleteInvoice id={invoice.id} />
         </div>
       </div>
     </div>
