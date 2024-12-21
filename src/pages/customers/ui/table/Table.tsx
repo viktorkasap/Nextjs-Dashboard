@@ -1,11 +1,10 @@
 import { Suspense } from 'react';
 
 import { CustomerTable, queryFilteredCustomers } from '@/entites/customer';
+// eslint-disable-next-line no-unused-vars,@typescript-eslint/no-unused-vars
+import { CustomerAvatarClient, CustomerAvatarServer } from '@/features/customer-avatar';
 import { formatCurrency } from '@/shared/lib';
 import { CustomersTableSkeleton } from '@/shared/ui';
-
-// eslint-disable-next-line no-unused-vars,@typescript-eslint/no-unused-vars
-import { CustomerAvatarClient, CustomerAvatarServer } from './ui';
 
 interface TableProps {
   query: string;
@@ -33,8 +32,8 @@ const TableView = async ({ query, currentPage }: TableProps) => {
       <div className="overflow-x-auto">
         <div className="inline-block min-w-full align-middle">
           <div className="overflow-hidden rounded-md bg-gray-50 p-2 md:pt-0">
-            <TableDesktop customers={customers} />
-            <TableMobile customers={customers} />
+            <DesktopTable customers={customers} />
+            <MobileTable customers={customers} />
           </div>
         </div>
       </div>
@@ -51,7 +50,7 @@ interface TableRowProps {
 }
 
 // Table Desktop
-const TableDesktop = ({ customers }: TableContentProps) => {
+const DesktopTable = ({ customers }: TableContentProps) => {
   return (
     <table className="hidden min-w-full rounded-md text-gray-900 md:table">
       <thead className="rounded-md bg-gray-50 text-left text-sm font-normal">
@@ -88,9 +87,9 @@ const DesktopTableRow = ({ customer }: TableRowProps) => {
     <tr key={customer.id} className="group">
       <td className="whitespace-nowrap bg-white py-5 pl-4 pr-3 text-sm text-black group-first-of-type:rounded-md group-last-of-type:rounded-md sm:pl-6">
         <div className="flex items-center gap-3">
-          {/* Server component */}
+          {/* 1) Server component */}
           <CustomerAvatarServer name={customer.name} src={customer.image_url} />
-          {/* Client component */}
+          {/* 2) Client component */}
           {/* <CustomerAvatarClient name={customer.name} src={customer.image_url} /> */}
           <p>{customer.name}</p>
         </div>
@@ -106,7 +105,7 @@ const DesktopTableRow = ({ customer }: TableRowProps) => {
 };
 
 // Table Mobile
-const TableMobile = ({ customers }: TableContentProps) => {
+const MobileTable = ({ customers }: TableContentProps) => {
   return (
     <div className="md:hidden">
       {customers?.map((customer) => <MobileTableRow key={`${customer.name}-${customer.email}-mob`} customer={customer} />)}

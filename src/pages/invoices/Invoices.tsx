@@ -1,13 +1,13 @@
 import { Metadata } from 'next';
 
 import { queryInvoicesPages } from '@/entites/invoice';
-// ! FIXME: Split imports - add rule
+// ! FIXME: Split imports - add eslint or prettier rule
 import { Pagination } from '@/features/pagination';
 import { SearchBar } from '@/features/search-bar';
-// ! FIXME: Split imports - add rule
+// ! FIXME: Split imports - add eslint or prettier rule
 import { lusitana } from '@/shared/assets';
 
-import { CreateInvoiceButton, Table, DeleteInvoice, UpdateInvoice, StatusInvoice } from './ui';
+import { CreateInvoiceButton, Table } from './ui';
 
 export const metadata: Metadata = {
   title: 'Invoices',
@@ -37,13 +37,7 @@ export const Invoices = async (props: InvoicesPageProps) => {
         <SearchBar placeholder="Search invoices..." />
         <CreateInvoiceButton />
       </div>
-      <Table
-        query={query}
-        currentPage={currentPage}
-        DeleteInvoice={DeleteInvoice}
-        UpdateInvoice={UpdateInvoice}
-        StatusInvoice={StatusInvoice}
-      />
+      <Table query={query} currentPage={currentPage} />
       <Pagination totalPages={totalPages} />
     </main>
   );

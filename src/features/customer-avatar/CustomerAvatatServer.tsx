@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-import { getValidAvatarSrc } from '@/shared/lib';
+import { getValidAvatarSrc } from './api';
 
 /**
  * This is server side component

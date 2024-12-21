@@ -11,14 +11,12 @@ const PLACEHOLDER_AVATAR_SRC = '/customers/avatar-placeholder.png';
  * @constructor
  */
 export const CustomerAvatarClient = ({ name, src }: { name: string; src: string }) => {
-  const [safeSrc, setSafeSrc] = useState(src || PLACEHOLDER_AVATAR_SRC);
+  const initialSrc = src.startsWith('/customers/') ? src : PLACEHOLDER_AVATAR_SRC;
+  const [safeSrc, setSafeSrc] = useState(initialSrc);
 
   const handleError = () => {
     setSafeSrc(PLACEHOLDER_AVATAR_SRC);
   };
 
-  return (
-    // eslint-disable-next-line jsx-a11y/img-redundant-alt
-    <img src={safeSrc} width={28} height={28} onError={handleError} className="rounded-full" alt={`${name}'s profile picture`} />
-  );
+  return <img src={safeSrc} width={28} height={28} onError={handleError} className="rounded-full" alt={`${name}'s profile picture`} />;
 };
