@@ -1,7 +1,5 @@
 export interface DeleteInvoiceProps {
   id: string;
-  // eslint-disable-next-line no-unused-vars
-  onDeletePending: (status: boolean) => void;
 }
 
 export interface UpdateInvoiceProps {

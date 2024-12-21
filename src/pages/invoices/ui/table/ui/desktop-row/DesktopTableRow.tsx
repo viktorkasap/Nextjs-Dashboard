@@ -1,12 +1,13 @@
 'use client';
 
-import { ComponentType, ReactNode, useState } from 'react';
+import { ComponentType, ReactNode } from 'react';
 
 import clsx from 'clsx';
 
 import { InvoicesTable } from '@/entites/invoice';
 import { formatCurrency, formatDateToLocal } from '@/shared/lib';
 
+import { useDeleteInvoiceContext } from '../../context';
 import { DeleteInvoiceProps } from '../../types';
 
 interface DesktopTableRowProps {
@@ -24,7 +25,7 @@ export const DesktopTableRow = ({
   renderUpdateInvoice,
   DeleteInvoice,
 }: DesktopTableRowProps) => {
-  const [isDeleting, setIsDeleting] = useState(false);
+  const { isDeleting } = useDeleteInvoiceContext();
 
   return (
     <tr
@@ -45,7 +46,7 @@ export const DesktopTableRow = ({
       <td className="whitespace-nowrap py-3 pl-6 pr-3">
         <div className="flex justify-end gap-3">
           {renderUpdateInvoice}
-          <DeleteInvoice id={invoice.id} onDeletePending={setIsDeleting} />
+          <DeleteInvoice id={invoice.id} />
         </div>
       </td>
     </tr>

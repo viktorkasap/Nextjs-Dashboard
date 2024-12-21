@@ -4,6 +4,7 @@ import { InvoicesTable, queryFilteredInvoices } from '@/entites/invoice';
 import { CustomerAvatarServer } from '@/features/customer-avatar';
 import { InvoicesTableSkeleton } from '@/shared/ui';
 
+import { DeleteInvoiceProvider } from './context';
 import { DesktopTableRow, MobileTableRow, DeleteInvoice, UpdateInvoice, StatusInvoice } from './ui';
 
 interface TableProps {
@@ -76,14 +77,15 @@ const DesktopTable = ({ invoices }: TableContentProps) => {
       <tbody className="bg-white">
         {/* TODO: Make TR as client, it allows show pending effect */}
         {invoices?.map((invoice) => (
-          <DesktopTableRow
-            key={`${invoice.id}-${invoice.email}-desk`}
-            invoice={invoice}
-            DeleteInvoice={DeleteInvoice}
-            renderUpdateInvoice={<UpdateInvoice id={invoice.id} />}
-            renderStatusInvoice={<StatusInvoice status={invoice.status} />}
-            renderCustomerAvatar={<CustomerAvatarServer name={invoice.name} src={invoice.image_url} />}
-          />
+          <DeleteInvoiceProvider key={`${invoice.id}-${invoice.email}-desk`}>
+            <DesktopTableRow
+              invoice={invoice}
+              DeleteInvoice={DeleteInvoice}
+              renderUpdateInvoice={<UpdateInvoice id={invoice.id} />}
+              renderStatusInvoice={<StatusInvoice status={invoice.status} />}
+              renderCustomerAvatar={<CustomerAvatarServer name={invoice.name} src={invoice.image_url} />}
+            />
+          </DeleteInvoiceProvider>
         ))}
       </tbody>
     </table>
@@ -94,14 +96,15 @@ const MobileTable = ({ invoices }: TableContentProps) => {
   return (
     <div className="md:hidden">
       {invoices?.map((invoice) => (
-        <MobileTableRow
-          key={`${invoice.id}-${invoice.email}-mob`}
-          invoice={invoice}
-          DeleteInvoice={DeleteInvoice}
-          renderUpdateInvoice={<UpdateInvoice id={invoice.id} />}
-          renderStatusInvoice={<StatusInvoice status={invoice.status} />}
-          renderCustomerAvatar={<CustomerAvatarServer name={invoice.name} src={invoice.image_url} />}
-        />
+        <DeleteInvoiceProvider key={`${invoice.id}-${invoice.email}-mob`}>
+          <MobileTableRow
+            invoice={invoice}
+            DeleteInvoice={DeleteInvoice}
+            renderUpdateInvoice={<UpdateInvoice id={invoice.id} />}
+            renderStatusInvoice={<StatusInvoice status={invoice.status} />}
+            renderCustomerAvatar={<CustomerAvatarServer name={invoice.name} src={invoice.image_url} />}
+          />
+        </DeleteInvoiceProvider>
       ))}
     </div>
   );

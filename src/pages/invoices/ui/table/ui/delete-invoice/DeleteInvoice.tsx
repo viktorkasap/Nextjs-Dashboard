@@ -7,6 +7,7 @@ import { TrashIcon, ClockIcon } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
 import { toast } from 'react-toastify';
 
+import { useDeleteInvoiceContext } from '../../context';
 import { DeleteInvoiceProps } from '../../types';
 
 import { deleteInvoiceById } from './api';
@@ -15,16 +16,22 @@ import { deleteInvoiceById } from './api';
  * Handles the functionality for deleting an invoice.
  * Opens a confirmation dialog, and upon confirmation, attempts to delete the specified invoice.
  * Provides visual feedback through pending states and toast notification indicating failure.
- *
- * @param {Object} DeleteInvoiceProps - The properties used to configure the invoice deletion.
- * @param {string} DeleteInvoiceProps.id - The identifier of the invoice to be deleted.
- *
- * @return {JSX.Element} A React component that includes a delete button and a confirmation dialog.
  */
-export const DeleteInvoice = ({ id, onDeletePending }: DeleteInvoiceProps): ReactNode => {
+export const DeleteInvoice = ({ id }: DeleteInvoiceProps): ReactNode => {
   // For dialog state
   const [isOpen, setIsOpen] = useState(false);
-  const { isPending, handleDelete } = useDeleteInvoice({ id, onDeletePending, callbackStart: () => setIsOpen(false) });
+
+  const { setIsDeleting } = useDeleteInvoiceContext();
+  const { isPending, handleDelete } = useDeleteInvoice({
+    id,
+    callbackStart: () => {
+      setIsDeleting(true);
+      setIsOpen(false);
+    },
+    callbackEnd: () => {
+      setIsDeleting(false);
+    },
+  });
 
   return (
     <>
@@ -100,19 +107,17 @@ export const DeleteInvoice = ({ id, onDeletePending }: DeleteInvoiceProps): Reac
 
 interface UseDeleteInvoiceProps {
   id: string;
-  onDeletePending: (_isPending: boolean) => void;
   callbackStart?: () => void;
   callbackEnd?: () => void;
 }
 
-const useDeleteInvoice = ({ id, callbackStart, callbackEnd, onDeletePending }: UseDeleteInvoiceProps) => {
+const useDeleteInvoice = ({ id, callbackStart, callbackEnd }: UseDeleteInvoiceProps) => {
   // For UI pending status
   const [isPending, setIsPending] = useState(false);
 
   const handleDelete = async () => {
     callbackStart?.();
     setIsPending(true);
-    onDeletePending(true);
 
     try {
       await toast.promise(deleteInvoiceById(id), {
@@ -130,7 +135,6 @@ const useDeleteInvoice = ({ id, callbackStart, callbackEnd, onDeletePending }: U
       });
     } finally {
       setIsPending(false);
-      onDeletePending(false);
       callbackEnd?.();
     }
   };
