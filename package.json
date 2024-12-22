@@ -5,7 +5,8 @@
     "build": "next build",
     "dev": "next dev --turbo",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "check": "eslint --fix ./app ./src && tsc --noEmit"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.0",

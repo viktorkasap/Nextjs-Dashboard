@@ -1,5 +1,5 @@
-import typography from '@tailwindcss/typography';
 import forms from '@tailwindcss/forms';
+import typography from '@tailwindcss/typography';
 import type { Config } from 'tailwindcss';
 
 const config: Config = {
