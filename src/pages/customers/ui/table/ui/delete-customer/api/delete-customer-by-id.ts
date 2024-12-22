@@ -1,9 +1,7 @@
 'use server';
 
 import { sql } from '@vercel/postgres';
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-expect-error
-import { expirePath } from 'next/cache';
+import { revalidatePath } from 'next/cache';
 
 export type State = {
   error?: string | null;
@@ -21,8 +19,8 @@ export const deleteCustomerById = async (
   try {
     await deleteAction(customerId);
 
-    expirePath('/dashboard/invoices');
-    expirePath('/dashboard/customers');
+    revalidatePath('/dashboard/invoices');
+    revalidatePath('/dashboard/customers');
 
     return { success: true, message: 'Customer was deleted successfully.' };
   } catch (error) {
