@@ -1,4 +1,4 @@
-import { ComponentType, ReactNode } from 'react';
+import { ReactNode } from 'react';
 
 import { CustomerTable } from '@/entites/customer';
 import { CustomerAvatarServer } from '@/features/customer-avatar';
