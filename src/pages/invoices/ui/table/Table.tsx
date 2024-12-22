@@ -22,13 +22,6 @@ export const Table = ({ query, currentPage }: TableProps) => {
   );
 };
 
-// TODO:
-//  OK 2) Add CustomerAvatar
-//  OK 3) Split tables for mobile and desktop
-//  OK 4) Add row context for deleting
-//  OK 5) Add pending status for row while delete invoice
-//  6) Add customer delete pending as well as invoices
-
 const TableView = async ({ query, currentPage }: TableProps) => {
   const invoices = await queryFilteredInvoices({ query, currentPage });
 
@@ -82,7 +75,7 @@ const DesktopTable = ({ invoices }: TableContentProps) => {
             <DesktopTableRow
               invoice={invoice}
               DeleteInvoice={DeleteInvoice}
-              renderUpdateInvoice={<UpdateInvoice id={invoice.id} />}
+              renderUpdateInvoice={<UpdateInvoice invoiceId={invoice.id} />}
               renderStatusInvoice={<StatusInvoice status={invoice.status} />}
               renderCustomerAvatar={<CustomerAvatarServer name={invoice.name} src={invoice.image_url} />}
             />
@@ -101,7 +94,7 @@ const MobileTable = ({ invoices }: TableContentProps) => {
           <MobileTableRow
             invoice={invoice}
             DeleteInvoice={DeleteInvoice}
-            renderUpdateInvoice={<UpdateInvoice id={invoice.id} />}
+            renderUpdateInvoice={<UpdateInvoice invoiceId={invoice.id} />}
             renderStatusInvoice={<StatusInvoice status={invoice.status} />}
             renderCustomerAvatar={<CustomerAvatarServer name={invoice.name} src={invoice.image_url} />}
           />

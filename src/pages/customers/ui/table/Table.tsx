@@ -1,10 +1,9 @@
 import { Suspense } from 'react';
 
 import { CustomerTable, queryFilteredCustomers } from '@/entites/customer';
-// eslint-disable-next-line no-unused-vars,@typescript-eslint/no-unused-vars
-import { CustomerAvatarClient, CustomerAvatarServer } from '@/features/customer-avatar';
-import { formatCurrency } from '@/shared/lib';
 import { CustomersTableSkeleton } from '@/shared/ui';
+
+import { DesktopTableRow, MobileTableRow, DeleteCustomer } from './ui';
 
 interface TableProps {
   query: string;
@@ -45,10 +44,6 @@ interface TableContentProps {
   customers: CustomerTable[];
 }
 
-interface TableRowProps {
-  customer: CustomerTable;
-}
-
 // Table Desktop
 const DesktopTable = ({ customers }: TableContentProps) => {
   return (
@@ -58,49 +53,34 @@ const DesktopTable = ({ customers }: TableContentProps) => {
           <th scope="col" className="px-4 py-5 font-medium sm:pl-6">
             Name
           </th>
-          <th scope="col" className="px-3 py-5 font-medium">
+          <th scope="col" className="px-1 py-5 font-medium">
             Email
           </th>
-          <th scope="col" className="px-3 py-5 font-medium">
+          <th scope="col" className="px-1 py-5 font-medium">
             Total Invoices
           </th>
-          <th scope="col" className="px-3 py-5 font-medium">
+          <th scope="col" className="px-1 py-5 font-medium">
             Total Pending
           </th>
-          <th scope="col" className="px-4 py-5 font-medium">
+          <th scope="col" className="px-1 py-5 font-medium">
             Total Paid
+          </th>
+          <th scope="col" className="relative py-3 pl-6 pr-3">
+            <span className="sr-only">Edit</span>
           </th>
         </tr>
       </thead>
 
       <tbody className="divide-y divide-gray-200 text-gray-900">
         {customers.map((customer) => (
-          <DesktopTableRow key={`${customer.name}-${customer.email}-desk`} customer={customer} />
+          <DesktopTableRow
+            key={`${customer.name}-${customer.email}-desk`}
+            customer={customer}
+            renderDeleteButton={<DeleteCustomer customerId={customer.id} />}
+          />
         ))}
       </tbody>
     </table>
-  );
-};
-
-const DesktopTableRow = ({ customer }: TableRowProps) => {
-  return (
-    <tr key={customer.id} className="group">
-      <td className="whitespace-nowrap bg-white py-5 pl-4 pr-3 text-sm text-black group-first-of-type:rounded-md group-last-of-type:rounded-md sm:pl-6">
-        <div className="flex items-center gap-3">
-          {/* 1) Server component */}
-          <CustomerAvatarServer name={customer.name} src={customer.image_url} />
-          {/* 2) Client component */}
-          {/* <CustomerAvatarClient name={customer.name} src={customer.image_url} /> */}
-          <p>{customer.name}</p>
-        </div>
-      </td>
-      <td className="whitespace-nowrap bg-white px-4 py-5 text-sm">{customer.email}</td>
-      <td className="whitespace-nowrap bg-white px-4 py-5 text-sm"> {customer.totalInvoices}</td>
-      <td className="whitespace-nowrap bg-white px-4 py-5 text-sm">{formatCurrency(customer.totalPending)}</td>
-      <td className="whitespace-nowrap bg-white px-4 py-5 text-sm group-first-of-type:rounded-md group-last-of-type:rounded-md">
-        {formatCurrency(customer.totalPaid)}
-      </td>
-    </tr>
   );
 };
 
@@ -109,39 +89,6 @@ const MobileTable = ({ customers }: TableContentProps) => {
   return (
     <div className="md:hidden">
       {customers?.map((customer) => <MobileTableRow key={`${customer.name}-${customer.email}-mob`} customer={customer} />)}
-    </div>
-  );
-};
-
-const MobileTableRow = ({ customer }: TableRowProps) => {
-  return (
-    <div key={customer.id} className="mb-2 w-full rounded-md bg-white p-4">
-      <div className="flex items-center justify-between border-b pb-4">
-        <div>
-          <div className="mb-2 flex items-center">
-            <div className="flex items-center gap-3">
-              {/* Server component */}
-              <CustomerAvatarServer name={customer.name} src={customer.image_url} />
-              {/* Client component */}
-              {/* <CustomerAvatarClient name={customer.name} src={customer.image_url} /> */} <p>{customer.name}</p>
-            </div>
-          </div>
-          <p className="text-sm text-gray-500">{customer.email}</p>
-        </div>
-      </div>
-      <div className="flex w-full items-center justify-between border-b py-5">
-        <div className="flex w-1/2 flex-col">
-          <p className="text-xs">Pending</p>
-          <p className="font-medium">{formatCurrency(customer.totalPending)}</p>
-        </div>
-        <div className="flex w-1/2 flex-col">
-          <p className="text-xs">Paid</p>
-          <p className="font-medium">{formatCurrency(customer.totalPaid)}</p>
-        </div>
-      </div>
-      <div className="pt-4 text-sm">
-        <p>{customer.totalInvoices} invoices</p>
-      </div>
     </div>
   );
 };

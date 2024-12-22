@@ -1,8 +1,6 @@
 import { sql } from '@vercel/postgres';
 import { NextRequest, NextResponse } from 'next/server';
 
-// TODO: Protect this API with JWT
-
 /*
     ### GET
     curl http://localhost:3000/api/invoices

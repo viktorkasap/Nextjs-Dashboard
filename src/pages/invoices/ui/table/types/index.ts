@@ -1,9 +1,9 @@
 export interface DeleteInvoiceProps {
-  id: string;
+  invoiceId: string;
 }
 
 export interface UpdateInvoiceProps {
-  id: string;
+  invoiceId: string;
 }
 
 export interface StatusInvoiceProps {

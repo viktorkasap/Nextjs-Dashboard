@@ -17,13 +17,13 @@ import { deleteInvoiceById } from './api';
  * Opens a confirmation dialog, and upon confirmation, attempts to delete the specified invoice.
  * Provides visual feedback through pending states and toast notification indicating failure.
  */
-export const DeleteInvoice = ({ id }: DeleteInvoiceProps): ReactNode => {
+export const DeleteInvoice = ({ invoiceId }: DeleteInvoiceProps): ReactNode => {
   // For dialog state
   const [isOpen, setIsOpen] = useState(false);
 
   const { setIsDeleting } = useDeleteInvoiceContext();
   const { isPending, handleDelete } = useDeleteInvoice({
-    id,
+    invoiceId,
     callbackStart: () => {
       setIsDeleting(true);
       setIsOpen(false);
@@ -106,12 +106,12 @@ export const DeleteInvoice = ({ id }: DeleteInvoiceProps): ReactNode => {
 };
 
 interface UseDeleteInvoiceProps {
-  id: string;
+  invoiceId: string;
   callbackStart?: () => void;
   callbackEnd?: () => void;
 }
 
-const useDeleteInvoice = ({ id, callbackStart, callbackEnd }: UseDeleteInvoiceProps) => {
+const useDeleteInvoice = ({ invoiceId, callbackStart, callbackEnd }: UseDeleteInvoiceProps) => {
   // For UI pending status
   const [isPending, setIsPending] = useState(false);
 
@@ -120,7 +120,7 @@ const useDeleteInvoice = ({ id, callbackStart, callbackEnd }: UseDeleteInvoicePr
     setIsPending(true);
 
     try {
-      await toast.promise(deleteInvoiceById(id), {
+      await toast.promise(deleteInvoiceById(invoiceId), {
         pending: 'Deleting invoice...',
         success: {
           render: ({ data }) => {

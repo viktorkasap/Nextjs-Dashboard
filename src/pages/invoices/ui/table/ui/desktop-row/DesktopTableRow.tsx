@@ -41,7 +41,7 @@ export const DesktopTableRow = memo(
         <td className="whitespace-nowrap py-3 pl-6 pr-3">
           <div className="flex justify-end gap-3">
             {renderUpdateInvoice}
-            <DeleteInvoice id={invoice.id} />
+            <DeleteInvoice invoiceId={invoice.id} />
           </div>
         </td>
       </tr>

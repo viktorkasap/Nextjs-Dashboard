@@ -35,6 +35,7 @@ interface CardProps {
 export const Card = ({ title, value, type }: CardProps) => {
   const Icon = iconMap[type];
 
+  // TODO: Rewrite to real data
   return (
     <div className="rounded-xl bg-gray-50 p-2 shadow-sm">
       <div className="flex p-4">

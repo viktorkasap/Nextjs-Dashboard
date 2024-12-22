@@ -41,7 +41,7 @@ export const MobileTableRow = memo(
           </div>
           <div className="flex justify-end gap-2">
             {renderUpdateInvoice}
-            <DeleteInvoice id={invoice.id} />
+            <DeleteInvoice invoiceId={invoice.id} />
           </div>
         </div>
       </div>

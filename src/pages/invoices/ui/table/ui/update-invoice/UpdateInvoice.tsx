@@ -3,12 +3,12 @@ import Link from 'next/link';
 
 import { UpdateInvoiceProps } from '../../types';
 
-export const UpdateInvoice = ({ id }: UpdateInvoiceProps) => {
+export const UpdateInvoice = ({ invoiceId }: UpdateInvoiceProps) => {
   // eslint-disable-next-line no-console
-  console.log('Update invoice ID:', id);
+  console.log('Update invoice ID:', invoiceId);
 
   return (
-    <Link href={`/dashboard/invoices/${id}/edit`} className="rounded-md border p-2 hover:bg-gray-100">
+    <Link href={`/dashboard/invoices/${invoiceId}/edit`} className="rounded-md border p-2 hover:bg-gray-100">
       <PencilIcon className="w-5" />
     </Link>
   );
