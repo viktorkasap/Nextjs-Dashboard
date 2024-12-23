@@ -77,7 +77,7 @@ const DesktopTable = ({ invoices }: TableContentProps) => {
               DeleteInvoice={DeleteInvoice}
               renderUpdateInvoice={<UpdateInvoice invoiceId={invoice.id} />}
               renderStatusInvoice={<StatusInvoice status={invoice.status} />}
-              renderCustomerAvatar={<CustomerAvatarServer name={invoice.name} src={invoice.image_url} />}
+              renderCustomerAvatar={<CustomerAvatarServer name={invoice.name} src={invoice.imageUrl} />}
             />
           </DeleteInvoiceProvider>
         ))}
@@ -96,7 +96,7 @@ const MobileTable = ({ invoices }: TableContentProps) => {
             DeleteInvoice={DeleteInvoice}
             renderUpdateInvoice={<UpdateInvoice invoiceId={invoice.id} />}
             renderStatusInvoice={<StatusInvoice status={invoice.status} />}
-            renderCustomerAvatar={<CustomerAvatarServer name={invoice.name} src={invoice.image_url} />}
+            renderCustomerAvatar={<CustomerAvatarServer name={invoice.name} src={invoice.imageUrl} />}
           />
         </DeleteInvoiceProvider>
       ))}

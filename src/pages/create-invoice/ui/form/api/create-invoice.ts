@@ -1,11 +1,12 @@
 'use server';
 
-import { sql } from '@vercel/postgres';
+// import { sql } from '@vercel/postgres';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { z } from 'zod';
 
 import { EInvoiceStatus, InvoiceStatus } from '@/entites/invoice';
+import { db } from '@/shared/db';
 
 type StateErrors = {
   customerId?: string[];
@@ -19,8 +20,6 @@ export type State = {
 };
 
 const FormDataSchema = z.object({
-  // id: z.string(),
-  // date: z.string(),
   customerId: z.string({ invalid_type_error: 'Please select a customer.' }),
   amount: z.coerce.number().gt(0, { message: 'Please enter an amount greater than $0.' }), // gt - Greater Then
   status: z.enum([EInvoiceStatus.Pending, EInvoiceStatus.Paid], {
@@ -77,8 +76,18 @@ interface QueryCreateProps {
 }
 
 const queryCreate = async ({ customerId, amountInCents, status, date }: QueryCreateProps) => {
-  return await sql`
-    INSERT INTO invoices (customer_id, amount, status, date)
-    VALUES (${customerId}, ${amountInCents}, ${status}, ${date})
-  `;
+  try {
+    return await db.invoice.create({
+      data: {
+        customerId,
+        amount: amountInCents,
+        status,
+        date: new Date(date),
+      },
+    }); // Возвращает объект нового инвойса
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('Create Invoice Error:', error);
+    throw new Error('Failed to create a new invoice.');
+  }
 };

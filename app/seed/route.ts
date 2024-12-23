@@ -1,3 +1,7 @@
+/***********/
+/* SQL */
+/***********/
+
 // import { db } from '@vercel/postgres';
 // import bcrypt from 'bcrypt';
 
@@ -16,6 +20,7 @@
 //     );
 //   `;
 //
+//   Add user
 //   const insertedUsers = await Promise.all(
 //     users.map(async (user) => {
 //       const hashedPassword = await bcrypt.hash(user.password, 10);
@@ -148,6 +153,26 @@
 // `;
 //
 // client.release();
+
+/***********/
+/* Prisma */
+/***********/
+
+// import bcrypt from 'bcrypt';
+// import { db } from '@/shared/db';
+
+// Add user
+// export async function GET() {
+//   const hashedPassword = await bcrypt.hash('123456', 10);
+//
+//   await db.user.create({
+//     data: {
+//       name: 'User',
+//       email: 'user@nextmail.com',
+//       password: hashedPassword,
+//     },
+//   });
+// }
 
 export async function GET() {
   return Response.json({

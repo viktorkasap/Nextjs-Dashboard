@@ -1,7 +1,9 @@
 'use server';
 
-import { sql } from '@vercel/postgres';
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime/binary';
 import { revalidatePath } from 'next/cache';
+
+import { db } from '@/shared/db';
 
 /**
  * Asynchronously deletes an invoice by its unique identifier.
@@ -23,10 +25,20 @@ export const deleteInvoiceById = async (invoiceId: string): Promise<{ message: s
     throw new Error('Failed to delete Invoice.');
   }
 };
-
-/**
- * Asynchronous function to delete a record from the 'invoices' table based on the provided ID.
- */
 const queryDeleteAction = async (invoiceId: string): Promise<unknown> => {
-  return await sql`DELETE FROM invoices WHERE id = ${invoiceId}`;
+  try {
+    return await db.invoice.delete({
+      where: {
+        id: invoiceId,
+      },
+    });
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('Delete Invoice Error:', error);
+    // ID doesn't exist
+    if ((error as PrismaClientKnownRequestError)?.code === 'P2025') {
+      throw new Error('Invoice not found.');
+    }
+    throw new Error('Failed to delete the invoice.');
+  }
 };

@@ -17,7 +17,7 @@ export const DesktopTableRow = ({ customer, renderDeleteButton }: RowProps) => {
       <td className="whitespace-nowrap bg-white py-5 pl-4 pr-3 text-sm text-black group-first-of-type:rounded-md group-last-of-type:rounded-md sm:pl-6">
         <div className="flex items-center gap-3">
           {/* 1) Server component */}
-          <CustomerAvatarServer name={customer.name} src={customer.image_url} />
+          <CustomerAvatarServer name={customer.name} src={customer.imageUrl || ''} />
           {/* 2) Client component */}
           {/* <CustomerAvatarClient name={customer.name} src={customer.image_url} /> */}
           <p>{customer.name}</p>

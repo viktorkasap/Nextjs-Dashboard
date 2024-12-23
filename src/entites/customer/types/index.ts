@@ -2,7 +2,7 @@ export type Customer = {
   id: string;
   name: string;
   email: string;
-  image_url: string;
+  imageUrl: string;
 };
 
 export type CustomerField = {
@@ -14,7 +14,7 @@ export type CustomerTable = {
   id: string;
   name: string;
   email: string;
-  image_url: string;
+  imageUrl: string | null;
   totalInvoices: number;
   totalPending: number;
   totalPaid: number;

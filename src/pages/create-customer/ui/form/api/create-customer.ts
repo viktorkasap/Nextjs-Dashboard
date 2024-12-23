@@ -1,9 +1,12 @@
 'use server';
 
-import { sql } from '@vercel/postgres';
+// import { sql } from '@vercel/postgres';
+
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { z } from 'zod';
+
+import { db } from '@/shared/db';
 
 type StateErrors = {
   name?: string[];
@@ -67,8 +70,17 @@ interface QueryCreateProps {
 }
 
 const queryCreate = async ({ name, email, imageUrl }: QueryCreateProps) => {
-  return await sql`
-        INSERT INTO customers (name, email, image_url)
-        VALUES (${name}, ${email}, ${imageUrl})
-    `;
+  try {
+    return await db.customer.create({
+      data: {
+        name,
+        email,
+        imageUrl,
+      },
+    });
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('Create Customer Error:', error);
+    throw new Error('Failed to create a new customer.');
+  }
 };

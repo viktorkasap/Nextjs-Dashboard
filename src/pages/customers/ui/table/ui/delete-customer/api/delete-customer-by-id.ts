@@ -1,7 +1,8 @@
 'use server';
 
-import { sql } from '@vercel/postgres';
 import { revalidatePath } from 'next/cache';
+
+import { db } from '@/shared/db';
 
 export type State = {
   error?: string | null;
@@ -33,19 +34,24 @@ export const deleteCustomerById = async (
 
 const deleteAction = async (customerId: string) => {
   try {
-    await sql`BEGIN;`;
+    await db.$transaction(async (prisma) => {
+      // 1) Delete customer's invoices
+      await prisma.invoice.deleteMany({
+        where: {
+          customerId,
+        },
+      });
 
-    // 1) Delete customer's invoices
-    await sql`DELETE FROM invoices WHERE customer_id = ${customerId};`;
-
-    // 2) Delete customer
-    await sql`DELETE FROM customers WHERE id = ${customerId};`;
-
-    await sql`COMMIT;`;
+      // 2) Delete customer
+      await prisma.customer.delete({
+        where: {
+          id: customerId,
+        },
+      });
+    });
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('Transaction failed: ', error);
-    await sql`ROLLBACK;`;
-    throw error;
+    throw new Error('Failed to complete the transaction.');
   }
 };
