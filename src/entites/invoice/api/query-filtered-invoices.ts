@@ -87,7 +87,7 @@ export const queryFilteredInvoices = async ({ query, currentPage }: GetFilteredI
       ...invoice,
       name: invoice.customer.name,
       email: invoice.customer.email,
-      image_url: invoice.customer.imageUrl,
+      imageUrl: invoice.customer.imageUrl,
     }));
   } catch (error) {
     // eslint-disable-next-line no-console

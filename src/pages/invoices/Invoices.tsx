@@ -1,10 +1,10 @@
 import { Metadata } from 'next';
 
 import { queryInvoicesPages } from '@/entites/invoice';
-// ! FIXME: Split imports - add eslint or prettier rule
+
 import { Pagination } from '@/features/pagination';
 import { SearchBar } from '@/features/search-bar';
-// ! FIXME: Split imports - add eslint or prettier rule
+
 import { lusitana } from '@/shared/assets';
 
 import { CreateInvoiceButton, Table } from './ui';

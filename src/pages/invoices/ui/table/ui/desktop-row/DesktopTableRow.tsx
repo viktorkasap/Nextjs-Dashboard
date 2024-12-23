@@ -5,6 +5,7 @@ import { ComponentType, memo, ReactNode } from 'react';
 import clsx from 'clsx';
 
 import { InvoicesTable } from '@/entites/invoice';
+
 import { formatCurrency, formatDateToLocal } from '@/shared/lib';
 
 import { useDeleteInvoiceContext } from '../../context';
@@ -36,7 +37,7 @@ export const DesktopTableRow = memo(
         </td>
         <td className="whitespace-nowrap px-3 py-3">{invoice.email}</td>
         <td className="whitespace-nowrap px-3 py-3">{formatCurrency(invoice.amount)}</td>
-        <td className="whitespace-nowrap px-3 py-3">{formatDateToLocal(invoice.date)}</td>
+        <td className="whitespace-nowrap px-3 py-3">{formatDateToLocal(String(invoice.date))}</td>
         <td className="whitespace-nowrap px-3 py-3">{renderStatusInvoice}</td>
         <td className="whitespace-nowrap py-3 pl-6 pr-3">
           <div className="flex justify-end gap-3">

@@ -1,10 +1,10 @@
 import { Metadata } from 'next';
 
 import { queryCustomersPages } from '@/entites/customer';
-// ! FIXME: Split imports - add rule
+
 import { Pagination } from '@/features/pagination';
 import { SearchBar } from '@/features/search-bar';
-// ! FIXME: Split imports - add rule
+
 import { lusitana } from '@/shared/assets';
 
 import { Table, CreateCustomerButton } from './ui';

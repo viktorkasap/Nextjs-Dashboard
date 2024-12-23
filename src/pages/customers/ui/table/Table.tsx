@@ -1,6 +1,7 @@
 import { Suspense } from 'react';
 
 import { CustomerTable, queryFilteredCustomers } from '@/entites/customer';
+
 import { CustomersTableSkeleton } from '@/shared/ui';
 
 import { DesktopTableRow, MobileTableRow, DeleteCustomer } from './ui';

@@ -5,7 +5,9 @@ import { ReactNode, ComponentType, memo } from 'react';
 import clsx from 'clsx';
 
 import { InvoicesTable } from '@/entites/invoice';
+
 import { useDeleteInvoiceContext } from '@/pages/invoices/ui/table/context';
+
 import { formatCurrency, formatDateToLocal } from '@/shared/lib';
 
 import { DeleteInvoiceProps } from '../../types';

@@ -1,7 +1,9 @@
 import { Suspense } from 'react';
 
 import { InvoicesTable, queryFilteredInvoices } from '@/entites/invoice';
+
 import { CustomerAvatarServer } from '@/features/customer-avatar';
+
 import { InvoicesTableSkeleton } from '@/shared/ui';
 
 import { DeleteInvoiceProvider } from './context';
@@ -29,10 +31,10 @@ const TableView = async ({ query, currentPage }: TableProps) => {
     <div className="mt-6 flow-root">
       <div className="inline-block min-w-full align-middle">
         <div className="rounded-lg bg-gray-50 p-2 md:pt-0">
-          {/* Mobile view */}
-          <MobileTable invoices={invoices} />
           {/* Desktop view */}
           <DesktopTable invoices={invoices} />
+          {/* Mobile view */}
+          <MobileTable invoices={invoices} />
         </div>
       </div>
     </div>
@@ -77,7 +79,7 @@ const DesktopTable = ({ invoices }: TableContentProps) => {
               DeleteInvoice={DeleteInvoice}
               renderUpdateInvoice={<UpdateInvoice invoiceId={invoice.id} />}
               renderStatusInvoice={<StatusInvoice status={invoice.status} />}
-              renderCustomerAvatar={<CustomerAvatarServer name={invoice.name} src={invoice.imageUrl} />}
+              renderCustomerAvatar={<CustomerAvatarServer name={invoice.name} src={invoice.imageUrl || ''} />}
             />
           </DeleteInvoiceProvider>
         ))}
@@ -96,7 +98,7 @@ const MobileTable = ({ invoices }: TableContentProps) => {
             DeleteInvoice={DeleteInvoice}
             renderUpdateInvoice={<UpdateInvoice invoiceId={invoice.id} />}
             renderStatusInvoice={<StatusInvoice status={invoice.status} />}
-            renderCustomerAvatar={<CustomerAvatarServer name={invoice.name} src={invoice.imageUrl} />}
+            renderCustomerAvatar={<CustomerAvatarServer name={invoice.name} src={invoice.imageUrl || ''} />}
           />
         </DeleteInvoiceProvider>
       ))}
