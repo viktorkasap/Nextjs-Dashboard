@@ -3,6 +3,7 @@ import clsx from 'clsx';
 import Image from 'next/image';
 
 import { LatestInvoice } from '@/entites/invoice';
+
 import { lusitana } from '@/shared/assets';
 export const LatestInvoices = async ({ latestInvoices }: { latestInvoices: LatestInvoice[] }) => {
   return (
@@ -19,7 +20,7 @@ export const LatestInvoices = async ({ latestInvoices }: { latestInvoices: Lates
                 })}>
                 <div className="flex items-center">
                   <Image
-                    src={invoice.imageUrl}
+                    src={invoice.imageUrl || ''}
                     alt={`${invoice.name}'s profile picture`}
                     className="mr-4 rounded-full"
                     width={32}

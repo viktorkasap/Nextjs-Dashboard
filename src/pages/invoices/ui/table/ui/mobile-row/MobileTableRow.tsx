@@ -39,7 +39,7 @@ export const MobileTableRow = memo(
         <div className="flex w-full items-center justify-between pt-4">
           <div>
             <p className="text-xl font-medium">{formatCurrency(invoice.amount)}</p>
-            <p>{formatDateToLocal(invoice.date)}</p>
+            <p>{formatDateToLocal(String(invoice.date))}</p>
           </div>
           <div className="flex justify-end gap-2">
             {renderUpdateInvoice}

@@ -1,7 +1,9 @@
 import { ReactNode } from 'react';
 
 import { CustomerTable } from '@/entites/customer';
+
 import { CustomerAvatarServer } from '@/features/customer-avatar';
+
 import { formatCurrency } from '@/shared/lib';
 
 interface RowProps {

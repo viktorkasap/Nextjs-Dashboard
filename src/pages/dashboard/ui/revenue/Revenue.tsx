@@ -1,8 +1,10 @@
 import { Suspense } from 'react';
 
 import { queryRevenue } from '@/entites/revenue';
-import { RevenueChartSkeleton } from '@/shared/ui';
+
 import { RevenueChart } from '@/widgets/revenue-chart';
+
+import { RevenueChartSkeleton } from '@/shared/ui';
 
 export const Revenue = async () => {
   return (

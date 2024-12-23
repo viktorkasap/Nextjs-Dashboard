@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation';
 
 import { queryCustomers } from '@/entites/customer';
 import { queryInvoiceById } from '@/entites/invoice';
+
 import { Breadcrumbs } from '@/widgets/breadcrumbs';
 
 import { Form } from './ui';

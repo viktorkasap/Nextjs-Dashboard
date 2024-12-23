@@ -1,8 +1,10 @@
 import { Suspense } from 'react';
 
 import { queryCardsData } from '@/entites/cards';
-import { CardSkeleton } from '@/shared/ui';
+
 import { Card } from '@/widgets/cards';
+
+import { CardSkeleton } from '@/shared/ui';
 
 export const Cards = () => {
   return (

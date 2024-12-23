@@ -6,6 +6,7 @@ import { CheckIcon, ClockIcon, CurrencyDollarIcon, UserCircleIcon } from '@heroi
 import Link from 'next/link';
 
 import { CustomerField } from '@/entites/customer';
+
 import { Button, InputErrorBlock } from '@/shared/ui';
 
 import { createInvoice, State } from './api';

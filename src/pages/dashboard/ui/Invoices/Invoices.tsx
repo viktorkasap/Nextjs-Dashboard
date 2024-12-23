@@ -1,8 +1,10 @@
 import { Suspense } from 'react';
 
 import { queryLatestInvoices } from '@/entites/invoice';
-import { InvoiceSkeleton } from '@/shared/ui';
+
 import { LatestInvoices } from '@/widgets/latest-invoices';
+
+import { InvoiceSkeleton } from '@/shared/ui';
 
 export const Invoices = () => {
   return (
