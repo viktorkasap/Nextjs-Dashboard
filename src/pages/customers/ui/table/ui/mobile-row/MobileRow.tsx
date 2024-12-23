@@ -14,7 +14,7 @@ export const MobileTableRow = ({ customer }: RowProps) => {
           <div className="mb-2 flex items-center">
             <div className="flex items-center gap-3">
               {/* Server component */}
-              <CustomerAvatarServer name={customer.name} src={customer.imageUrl} />
+              <CustomerAvatarServer name={customer.name} src={customer.imageUrl || ''} />
               {/* Client component */}
               {/* <CustomerAvatarClient name={customer.name} src={customer.image_url} /> */} <p>{customer.name}</p>
             </div>
