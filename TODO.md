@@ -1,2 +1,5 @@
 - [x] Add pending status for forms element
-- [ ] Validate form inputs and show errors
+- [x] Validate form inputs and show errors
+- [ ] Registration page/form
+- [ ] Upload avatar
+- [ ] Edit page/form customer

@@ -2,7 +2,8 @@ export type Customer = {
   id: string;
   name: string;
   email: string;
-  imageUrl: string;
+  avatarUrl: string;
+  avatarFile: Uint8Array | null;
 };
 
 export type CustomerField = {
@@ -14,7 +15,8 @@ export type CustomerTable = {
   id: string;
   name: string;
   email: string;
-  imageUrl: string | null;
+  avatarUrl: string | null;
+  avatarFile: Uint8Array | null;
   totalInvoices: number;
   totalPending: number;
   totalPaid: number;

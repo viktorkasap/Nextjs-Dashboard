@@ -4,9 +4,6 @@ import { getValidAvatarSrc } from './api';
 
 /**
  * This is server side component
- * @param name
- * @param src
- * @constructor
  */
 export const CustomerAvatarServer = async ({ name, src }: { name: string; src: string }) => {
   const avatarSrc = await getValidAvatarSrc(src);

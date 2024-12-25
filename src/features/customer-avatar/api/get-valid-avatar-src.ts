@@ -1,20 +1,18 @@
-const DEFAULT_ABSOLUTE_PATH = 'http://localhost:3000';
 const PLACEHOLDER_AVATAR_SRC = '/customers/avatar-placeholder.png';
 
-export const getValidAvatarSrc = async (relativeUrl: string): Promise<string> => {
+export const getValidAvatarSrc = async (url: string): Promise<string> => {
   // Guard
-  if (!relativeUrl) {
+  if (!url) {
     return PLACEHOLDER_AVATAR_SRC;
   }
 
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || DEFAULT_ABSOLUTE_PATH;
-  const absoluteUrl = new URL(relativeUrl, baseUrl);
+  const absoluteUrl = new URL(url);
 
   try {
     const res = await fetch(absoluteUrl.toString(), { method: 'HEAD' });
 
     if (res.ok) {
-      return relativeUrl;
+      return url;
     } else {
       // eslint-disable-next-line no-console
       console.warn(`Image not found at: ${absoluteUrl}`);
@@ -23,7 +21,7 @@ export const getValidAvatarSrc = async (relativeUrl: string): Promise<string> =>
     }
   } catch (error) {
     // eslint-disable-next-line no-console
-    console.error(`Error validating image URL: ${relativeUrl}`, error);
+    console.error(`Error validating image URL: ${url}`, error);
 
     return PLACEHOLDER_AVATAR_SRC;
   }

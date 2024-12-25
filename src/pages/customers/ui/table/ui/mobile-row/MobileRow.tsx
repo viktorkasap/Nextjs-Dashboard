@@ -15,10 +15,8 @@ export const MobileTableRow = ({ customer }: RowProps) => {
         <div>
           <div className="mb-2 flex items-center">
             <div className="flex items-center gap-3">
-              {/* Server component */}
-              <CustomerAvatarServer name={customer.name} src={customer.imageUrl || ''} />
-              {/* Client component */}
-              {/* <CustomerAvatarClient name={customer.name} src={customer.image_url} /> */} <p>{customer.name}</p>
+              <Avatar name={customer.name} avatarUrl={customer.avatarUrl} avatarFile={customer.avatarFile} />
+              <p>{customer.name}</p>
             </div>
           </div>
           <p className="text-sm text-gray-500">{customer.email}</p>
@@ -38,5 +36,23 @@ export const MobileTableRow = ({ customer }: RowProps) => {
         <p>{customer.totalInvoices} invoices</p>
       </div>
     </div>
+  );
+};
+
+const Avatar = ({ name, avatarUrl, avatarFile }: { name: string; avatarUrl: string | null; avatarFile: Uint8Array | null }) => {
+  let src = avatarUrl || '';
+
+  if (avatarFile) {
+    const base64String = Buffer.from(avatarFile).toString('base64');
+    src = `data:image/png;base64,${base64String}`;
+  }
+
+  return (
+    <>
+      {/* 1) Server component */}
+      <CustomerAvatarServer name={name} src={src} />
+      {/* 2) Client component */}
+      {/* <CustomerAvatarClient name={customer.name} src={avatarUrl || ''} /> */}
+    </>
   );
 };

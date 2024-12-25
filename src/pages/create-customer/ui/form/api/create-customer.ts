@@ -1,7 +1,5 @@
 'use server';
 
-// import { sql } from '@vercel/postgres';
-
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { z } from 'zod';
@@ -11,18 +9,23 @@ import { db } from '@/shared/db';
 type StateErrors = {
   name?: string[];
   email?: string[];
-  avatar?: string[];
+  avatarUrl?: string[];
+  avatarFile?: string[];
 };
 
 export type State = {
   errors?: StateErrors;
-  message?: string | null;
+  message: string;
 };
 
+const MAX_UPLOAD_SIZE = 64 * 1024; // 64Kb
+const ACCEPTED_FILE_TYPES = new Set(['jpg', 'jpeg', 'png', 'webp']);
+
+// Validate primitives
 const FormDataSchema = z.object({
   name: z.string().min(3, { message: 'Name must be at least 3 characters' }),
   email: z.string().email({ message: 'Invalid email address' }),
-  avatar: z.string(),
+  avatarUrl: z.string(),
 });
 
 const CreateCustomerSchema = FormDataSchema;
@@ -31,10 +34,11 @@ export const createCustomer = async (_prevState: State, formData: FormData) => {
   // Fake delay
   await new Promise((resolve) => setTimeout(resolve, 3000));
 
+  // 1) Validation Primitives
   const validatedFields = CreateCustomerSchema.safeParse({
     name: formData.get('name'),
     email: formData.get('email'),
-    avatar: formData.get('avatar'),
+    avatarUrl: formData.get('avatar-url'),
   });
 
   if (!validatedFields.success) {
@@ -44,13 +48,50 @@ export const createCustomer = async (_prevState: State, formData: FormData) => {
     };
   }
 
-  const { name, email, avatar } = validatedFields.data;
+  const { name, email, avatarUrl } = validatedFields.data;
+
+  // 2) Validation Avatar File
+  const avatarFile = formData.get('avatar-file');
+  let avatarBuffer: Buffer | undefined;
+
+  if (avatarFile instanceof Blob && avatarFile.size > 0) {
+    // 1) Check file size
+    if (avatarFile.size > MAX_UPLOAD_SIZE) {
+      return {
+        errors: {
+          name: undefined,
+          email: undefined,
+          avatarUrl: undefined,
+          avatarFile: [`File size must be < ${MAX_UPLOAD_SIZE / 1024}KB`],
+        },
+        message: 'File too large',
+      };
+    }
+
+    // 2) Check file types
+    const extension = avatarFile.type.split('/')[1];
+    if (!ACCEPTED_FILE_TYPES.has(extension)) {
+      return {
+        errors: {
+          name: undefined,
+          email: undefined,
+          avatarUrl: undefined,
+          avatarFile: [`Accepted file types: ${[...ACCEPTED_FILE_TYPES].join(', ')}`],
+        },
+        message: 'Wrong file type',
+      };
+    }
+
+    // 3) Blob
+    const arrayBuffer = await avatarFile.arrayBuffer();
+    avatarBuffer = Buffer.from(arrayBuffer);
+  }
 
   // eslint-disable-next-line no-console
-  console.log('Created customer data:', { name, email, avatar });
+  console.log('Created customer data:', { name, email, avatarUrl, avatarBuffer });
 
   try {
-    await queryCreate({ name, email, imageUrl: avatar });
+    await queryCreate({ name, email, avatarUrl, avatarFile: avatarBuffer });
   } catch (error) {
     // eslint-disable-next-line no-console
     console.log('Create customer error:', (error as Error).message);
@@ -66,16 +107,18 @@ export const createCustomer = async (_prevState: State, formData: FormData) => {
 interface QueryCreateProps {
   name: string;
   email: string;
-  imageUrl: string;
+  avatarUrl: string;
+  avatarFile: Uint8Array | undefined;
 }
 
-const queryCreate = async ({ name, email, imageUrl }: QueryCreateProps) => {
+const queryCreate = async ({ name, email, avatarUrl, avatarFile }: QueryCreateProps) => {
   try {
     return await db.customer.create({
       data: {
         name,
         email,
-        imageUrl,
+        avatarUrl,
+        avatarFile,
       },
     });
   } catch (error) {

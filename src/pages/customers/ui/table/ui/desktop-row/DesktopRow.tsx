@@ -18,10 +18,7 @@ export const DesktopTableRow = ({ customer, renderDeleteButton }: RowProps) => {
       className="w-full border-b py-3 text-sm last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg">
       <td className="whitespace-nowrap bg-white py-5 pl-4 pr-3 text-sm text-black group-first-of-type:rounded-md group-last-of-type:rounded-md sm:pl-6">
         <div className="flex items-center gap-3">
-          {/* 1) Server component */}
-          <CustomerAvatarServer name={customer.name} src={customer.imageUrl || ''} />
-          {/* 2) Client component */}
-          {/* <CustomerAvatarClient name={customer.name} src={customer.image_url} /> */}
+          <Avatar name={customer.name} avatarUrl={customer.avatarUrl} avatarFile={customer.avatarFile} />
           <p>{customer.name}</p>
         </div>
       </td>
@@ -33,5 +30,23 @@ export const DesktopTableRow = ({ customer, renderDeleteButton }: RowProps) => {
         <div className="flex justify-end gap-3">{renderDeleteButton}</div>
       </td>
     </tr>
+  );
+};
+
+const Avatar = ({ name, avatarUrl, avatarFile }: { name: string; avatarUrl: string | null; avatarFile: Uint8Array | null }) => {
+  let src = avatarUrl || '';
+
+  if (avatarFile) {
+    const base64String = Buffer.from(avatarFile).toString('base64');
+    src = `data:image/png;base64,${base64String}`;
+  }
+
+  return (
+    <>
+      {/* 1) Server component */}
+      <CustomerAvatarServer name={name} src={src} />
+      {/* 2) Client component */}
+      {/* <CustomerAvatarClient name={customer.name} src={avatarUrl || ''} /> */}
+    </>
   );
 };

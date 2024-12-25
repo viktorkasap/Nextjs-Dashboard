@@ -6,12 +6,10 @@ const PLACEHOLDER_AVATAR_SRC = '/customers/avatar-placeholder.png';
 
 /**
  * This is a client component that will return a placeholder image if the image SRC is not correct
- * @param name
- * @param src
- * @constructor
  */
 export const CustomerAvatarClient = ({ name, src }: { name: string; src: string }) => {
-  const initialSrc = src.startsWith('/customers/') ? src : PLACEHOLDER_AVATAR_SRC;
+  const regex = /\.(jpg|jpeg|png|webp|svg)$/i;
+  const initialSrc = regex.test(src) ? src : PLACEHOLDER_AVATAR_SRC;
   const [safeSrc, setSafeSrc] = useState(initialSrc);
 
   const handleError = () => {
