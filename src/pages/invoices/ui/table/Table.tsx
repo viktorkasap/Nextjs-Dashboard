@@ -79,7 +79,9 @@ const DesktopTable = ({ invoices }: TableContentProps) => {
               DeleteInvoice={DeleteInvoice}
               renderUpdateInvoice={<UpdateInvoice invoiceId={invoice.id} />}
               renderStatusInvoice={<StatusInvoice status={invoice.status} />}
-              renderCustomerAvatar={<CustomerAvatarServer name={invoice.name} src={invoice.imageUrl || ''} />}
+              renderCustomerAvatar={
+                <Avatar name={invoice.name} avatarUrl={invoice.customer.avatarUrl} avatarFile={invoice.customer.avatarFile} />
+              }
             />
           </DeleteInvoiceProvider>
         ))}
@@ -98,10 +100,30 @@ const MobileTable = ({ invoices }: TableContentProps) => {
             DeleteInvoice={DeleteInvoice}
             renderUpdateInvoice={<UpdateInvoice invoiceId={invoice.id} />}
             renderStatusInvoice={<StatusInvoice status={invoice.status} />}
-            renderCustomerAvatar={<CustomerAvatarServer name={invoice.name} src={invoice.imageUrl || ''} />}
+            renderCustomerAvatar={
+              <Avatar name={invoice.name} avatarUrl={invoice.customer.avatarUrl} avatarFile={invoice.customer.avatarFile} />
+            }
           />
         </DeleteInvoiceProvider>
       ))}
     </div>
+  );
+};
+
+const Avatar = ({ name, avatarUrl, avatarFile }: { name: string; avatarUrl: string | null; avatarFile: Uint8Array | null }) => {
+  let src = avatarUrl || '';
+
+  if (avatarFile) {
+    const base64String = Buffer.from(avatarFile).toString('base64');
+    src = `data:image/png;base64,${base64String}`;
+  }
+
+  return (
+    <>
+      {/* 1) Server component */}
+      <CustomerAvatarServer name={name} src={src} />
+      {/* 2) Client component */}
+      {/* <CustomerAvatarClient name={customer.name} src={avatarUrl || ''} /> */}
+    </>
   );
 };

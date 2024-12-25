@@ -30,6 +30,7 @@ export const queryFilteredInvoices = async ({ query, currentPage }: GetFilteredI
             name: true,
             email: true,
             avatarUrl: true,
+            avatarFile: true,
           },
         },
       },
@@ -45,6 +46,7 @@ export const queryFilteredInvoices = async ({ query, currentPage }: GetFilteredI
       name: invoice.customer.name,
       email: invoice.customer.email,
       avatarUrl: invoice.customer.avatarUrl,
+      avatarFile: invoice.customer.avatarFile,
     }));
   } catch (error) {
     // eslint-disable-next-line no-console

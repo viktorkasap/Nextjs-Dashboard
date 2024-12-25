@@ -27,7 +27,6 @@ export type LatestInvoice = {
 export type InvoicesTable = {
   name: string;
   email: string;
-  imageUrl: string | null;
   status: string;
   date: Date;
   id: string;
