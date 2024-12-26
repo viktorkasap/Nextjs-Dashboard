@@ -90,7 +90,7 @@ export const Form = () => {
         </div>
 
         {/* Upload Avatar */}
-        <InputAvatarUpload errors={state.errors?.avatarUrl} />
+        <InputAvatarUpload isPending={isPending} errors={state.errors?.avatarUrl} />
 
         {/* Errors Description */}
         <div>{state.errors && <p className="mt-2 text-sm text-red-500">{state.message}</p>}</div>
