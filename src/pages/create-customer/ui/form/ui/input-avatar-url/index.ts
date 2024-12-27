@@ -1,0 +1,1 @@
+export { InputAvatarUrl } from './InputAvatarUrl';

@@ -6,11 +6,17 @@ const MAX_UPLOAD_SIZE = 64 * 1024; // 64Kb
 const ACCEPTED_FILE_TYPES = new Set(['jpg', 'jpeg', 'png', 'webp']);
 
 export const InputAvatarUpload = ({ isPending, errors }: { isPending: boolean; errors?: string[] }) => {
+  // Errors
   const [sizeError, setSizeError] = useState<string | null>(null);
   const [typeError, setTypeError] = useState<string | null>(null);
+
+  // Preview
   const [imageSrcPreview, setImageSrcPreview] = useState<string | null>(null);
+
+  // Input element
   const inputRef = useRef<HTMLInputElement | null>(null);
 
+  // Reset input value
   const resetInput = () => {
     if (inputRef.current) {
       inputRef.current.value = '';
