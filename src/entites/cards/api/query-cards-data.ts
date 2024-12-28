@@ -10,23 +10,26 @@ export async function queryCardsData() {
     // how to initialize multiple queries in parallel with JS.
     const invoiceCountPromise = db.invoice.count();
     const customerCountPromise = db.customer.count();
-    const invoiceStatusPromise = db.invoice.aggregate({
+    const totalPaidPromise = db.invoice.aggregate({
       _sum: { amount: true },
-      where: {
-        OR: [{ status: InvoiceStatus.Paid }, { status: InvoiceStatus.Pending }],
-      },
+      where: { status: InvoiceStatus.Paid },
+    });
+    const totalPendingPromise = db.invoice.aggregate({
+      _sum: { amount: true },
+      where: { status: InvoiceStatus.Pending },
     });
 
-    const [invoiceCount, customerCount, invoiceStatus] = await Promise.all([
+    const [invoiceCount, customerCount, totalPaid, totalPending] = await Promise.all([
       invoiceCountPromise,
       customerCountPromise,
-      invoiceStatusPromise,
+      totalPaidPromise,
+      totalPendingPromise,
     ]);
 
     const numberOfInvoices = invoiceCount;
     const numberOfCustomers = customerCount;
-    const totalPaidInvoices = formatCurrency(invoiceStatus._sum.amount ?? 0);
-    const totalPendingInvoices = formatCurrency(invoiceStatus._sum.amount ?? 0); // Подправьте, если нужно
+    const totalPaidInvoices = formatCurrency(totalPaid._sum.amount ?? 0);
+    const totalPendingInvoices = formatCurrency(totalPending._sum.amount ?? 0);
 
     return {
       numberOfCustomers,
