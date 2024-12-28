@@ -1,3 +1,5 @@
+import { InvoiceStatus } from '@prisma/client';
+
 import { db } from '@/shared/db';
 
 import { ITEMS_PER_PAGE } from '../constants';
@@ -35,8 +37,11 @@ export const queryFilteredCustomers = async ({ query, currentPage }: GetFiltered
 
     return customers.map((customer) => {
       const totalInvoices = customer.invoices.length;
-      const totalPending = customer.invoices.reduce((sum, invoice) => (invoice.status === 'pending' ? sum + invoice.amount : sum), 0);
-      const totalPaid = customer.invoices.reduce((sum, invoice) => (invoice.status === 'paid' ? sum + invoice.amount : sum), 0);
+      const totalPending = customer.invoices.reduce(
+        (sum, invoice) => (invoice.status === InvoiceStatus.Pending ? sum + invoice.amount : sum),
+        0,
+      );
+      const totalPaid = customer.invoices.reduce((sum, invoice) => (invoice.status === InvoiceStatus.Paid ? sum + invoice.amount : sum), 0);
 
       return {
         id: customer.id,

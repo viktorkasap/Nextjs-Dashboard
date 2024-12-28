@@ -3,6 +3,7 @@
 import { useActionState } from 'react';
 
 import { CheckIcon, ClockIcon, CurrencyDollarIcon, UserCircleIcon } from '@heroicons/react/24/outline';
+import { InvoiceStatus } from '@prisma/client';
 import Link from 'next/link';
 
 import { CustomerField } from '@/entites/customer';
@@ -85,8 +86,8 @@ export const Form = ({ customers }: { customers: CustomerField[] }) => {
                   id="pending"
                   name="status"
                   type="radio"
-                  value="pending"
                   disabled={isPending}
+                  value={InvoiceStatus.Pending}
                   aria-describedby="status-error"
                   className="h-4 w-4 cursor-pointer border-gray-300 bg-gray-100 text-gray-600 focus:ring-2"
                 />
@@ -102,8 +103,8 @@ export const Form = ({ customers }: { customers: CustomerField[] }) => {
                   id="paid"
                   name="status"
                   type="radio"
-                  value="paid"
                   disabled={isPending}
+                  value={InvoiceStatus.Paid}
                   aria-describedby="status-error"
                   className="h-4 w-4 cursor-pointer border-gray-300 bg-gray-100 text-gray-600 focus:ring-2"
                 />

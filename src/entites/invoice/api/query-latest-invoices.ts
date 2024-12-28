@@ -5,7 +5,7 @@ export async function queryLatestInvoices() {
   try {
     const data = await db.invoice.findMany({
       where: {},
-      orderBy: { date: 'desc' },
+      orderBy: { createdAt: 'desc' },
       take: 5,
       include: {
         customer: {

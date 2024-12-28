@@ -14,7 +14,7 @@ export const Form = () => {
   const [state, formAction, isPending] = useActionState(createCustomer, initialState);
 
   return (
-    <form action={formAction} encType="multipart/form-data">
+    <form action={formAction}>
       <div className="rounded-md bg-gray-50 p-4 md:p-6">
         {/* Name */}
         <InputName isPending={isPending} errors={state.errors?.name} />

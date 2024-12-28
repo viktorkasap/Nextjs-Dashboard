@@ -16,12 +16,12 @@ interface MobileTableRowProps {
   invoice: InvoicesTable;
   renderStatusInvoice: ReactNode;
   renderCustomerAvatar: ReactNode;
-  renderUpdateInvoice: ReactNode;
+  renderEditInvoice: ReactNode;
   DeleteInvoice: ComponentType<DeleteInvoiceProps>;
 }
 
 export const MobileTableRow = memo(
-  ({ invoice, renderStatusInvoice, renderCustomerAvatar, renderUpdateInvoice, DeleteInvoice }: MobileTableRowProps) => {
+  ({ invoice, renderStatusInvoice, renderCustomerAvatar, renderEditInvoice, DeleteInvoice }: MobileTableRowProps) => {
     const { isDeleting } = useDeleteInvoiceContext();
 
     return (
@@ -42,7 +42,7 @@ export const MobileTableRow = memo(
             <p>{formatDateToLocal(String(invoice.date))}</p>
           </div>
           <div className="flex justify-end gap-2">
-            {renderUpdateInvoice}
+            {renderEditInvoice}
             <DeleteInvoice invoiceId={invoice.id} />
           </div>
         </div>

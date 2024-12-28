@@ -7,7 +7,7 @@ import { CustomerAvatarServer } from '@/features/customer-avatar';
 import { InvoicesTableSkeleton } from '@/shared/ui';
 
 import { DeleteInvoiceProvider } from './context';
-import { DesktopTableRow, MobileTableRow, DeleteInvoice, UpdateInvoice, StatusInvoice } from './ui';
+import { DesktopTableRow, MobileTableRow, DeleteInvoice, EditInvoice, StatusInvoice } from './ui';
 
 interface TableProps {
   query: string;
@@ -77,7 +77,7 @@ const DesktopTable = ({ invoices }: TableContentProps) => {
             <DesktopTableRow
               invoice={invoice}
               DeleteInvoice={DeleteInvoice}
-              renderUpdateInvoice={<UpdateInvoice invoiceId={invoice.id} />}
+              renderEditInvoice={<EditInvoice invoiceId={invoice.id} />}
               renderStatusInvoice={<StatusInvoice status={invoice.status} />}
               renderCustomerAvatar={
                 <Avatar name={invoice.name} avatarUrl={invoice.customer.avatarUrl} avatarFile={invoice.customer.avatarFile} />
@@ -98,7 +98,7 @@ const MobileTable = ({ invoices }: TableContentProps) => {
           <MobileTableRow
             invoice={invoice}
             DeleteInvoice={DeleteInvoice}
-            renderUpdateInvoice={<UpdateInvoice invoiceId={invoice.id} />}
+            renderEditInvoice={<EditInvoice invoiceId={invoice.id} />}
             renderStatusInvoice={<StatusInvoice status={invoice.status} />}
             renderCustomerAvatar={
               <Avatar name={invoice.name} avatarUrl={invoice.customer.avatarUrl} avatarFile={invoice.customer.avatarFile} />

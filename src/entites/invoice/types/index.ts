@@ -1,17 +1,11 @@
 /* eslint-disable no-unused-vars */
-
-export enum EInvoiceStatus {
-  Pending = 'pending',
-  Paid = 'paid',
-}
-
-export type InvoiceStatus = EInvoiceStatus.Pending | EInvoiceStatus.Paid;
+import { InvoiceStatus } from '@prisma/client';
 
 export type Invoice = {
   id: string;
-  customer_id: string;
+  customerId: string;
   amount: number;
-  date: string;
+  date: Date;
   status: InvoiceStatus;
 };
 

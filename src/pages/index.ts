@@ -6,3 +6,4 @@ export { CreateInvoicePage } from './create-invoice';
 export { EditInvoicePage } from './edit-invoice';
 export { LoginPage } from './login';
 export { CreateCustomerPage } from './create-customer';
+export { EditCustomerPage } from './edit-customer';

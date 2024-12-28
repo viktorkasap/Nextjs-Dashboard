@@ -1,5 +1,6 @@
-import { sql } from '@vercel/postgres';
+import { InvoiceStatus } from '@prisma/client';
 
+import { db } from '@/shared/db';
 import { formatCurrency } from '@/shared/lib';
 
 export async function queryCardsData() {
@@ -7,19 +8,25 @@ export async function queryCardsData() {
     // You can probably combine these into a single SQL query
     // However, we are intentionally splitting them to demonstrate
     // how to initialize multiple queries in parallel with JS.
-    const invoiceCountPromise = sql`SELECT COUNT(*) FROM invoices`;
-    const customerCountPromise = sql`SELECT COUNT(*) FROM customers`;
-    const invoiceStatusPromise = sql`SELECT
-         SUM(CASE WHEN status = 'paid' THEN amount ELSE 0 END) AS "paid",
-         SUM(CASE WHEN status = 'pending' THEN amount ELSE 0 END) AS "pending"
-         FROM invoices`;
+    const invoiceCountPromise = db.invoice.count();
+    const customerCountPromise = db.customer.count();
+    const invoiceStatusPromise = db.invoice.aggregate({
+      _sum: { amount: true },
+      where: {
+        OR: [{ status: InvoiceStatus.Paid }, { status: InvoiceStatus.Pending }],
+      },
+    });
 
-    const data = await Promise.all([invoiceCountPromise, customerCountPromise, invoiceStatusPromise]);
+    const [invoiceCount, customerCount, invoiceStatus] = await Promise.all([
+      invoiceCountPromise,
+      customerCountPromise,
+      invoiceStatusPromise,
+    ]);
 
-    const numberOfInvoices = Number(data[0].rows[0].count ?? '0');
-    const numberOfCustomers = Number(data[1].rows[0].count ?? '0');
-    const totalPaidInvoices = formatCurrency(data[2].rows[0].paid ?? '0');
-    const totalPendingInvoices = formatCurrency(data[2].rows[0].pending ?? '0');
+    const numberOfInvoices = invoiceCount;
+    const numberOfCustomers = customerCount;
+    const totalPaidInvoices = formatCurrency(invoiceStatus._sum.amount ?? 0);
+    const totalPendingInvoices = formatCurrency(invoiceStatus._sum.amount ?? 0); // Подправьте, если нужно
 
     return {
       numberOfCustomers,

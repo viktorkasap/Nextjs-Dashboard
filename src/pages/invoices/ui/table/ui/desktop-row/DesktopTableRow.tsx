@@ -15,12 +15,12 @@ interface DesktopTableRowProps {
   invoice: InvoicesTable;
   renderStatusInvoice: ReactNode;
   renderCustomerAvatar: ReactNode;
-  renderUpdateInvoice: ReactNode;
+  renderEditInvoice: ReactNode;
   DeleteInvoice: ComponentType<DeleteInvoiceProps>;
 }
 
 export const DesktopTableRow = memo(
-  ({ invoice, renderCustomerAvatar, renderStatusInvoice, renderUpdateInvoice, DeleteInvoice }: DesktopTableRowProps) => {
+  ({ invoice, renderCustomerAvatar, renderStatusInvoice, renderEditInvoice, DeleteInvoice }: DesktopTableRowProps) => {
     const { isDeleting } = useDeleteInvoiceContext();
 
     return (
@@ -41,7 +41,7 @@ export const DesktopTableRow = memo(
         <td className="whitespace-nowrap px-3 py-3">{renderStatusInvoice}</td>
         <td className="whitespace-nowrap py-3 pl-6 pr-3">
           <div className="flex justify-end gap-3">
-            {renderUpdateInvoice}
+            {renderEditInvoice}
             <DeleteInvoice invoiceId={invoice.id} />
           </div>
         </td>

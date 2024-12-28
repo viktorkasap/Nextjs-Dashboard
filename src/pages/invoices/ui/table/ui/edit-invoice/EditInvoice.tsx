@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 import { UpdateInvoiceProps } from '../../types';
 
-export const UpdateInvoice = ({ invoiceId }: UpdateInvoiceProps) => {
+export const EditInvoice = ({ invoiceId }: UpdateInvoiceProps) => {
   // eslint-disable-next-line no-console
   console.log('Update invoice ID:', invoiceId);
 

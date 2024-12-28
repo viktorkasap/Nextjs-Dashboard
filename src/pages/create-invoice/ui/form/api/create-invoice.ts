@@ -1,11 +1,9 @@
 'use server';
 
-// import { sql } from '@vercel/postgres';
+import { InvoiceStatus } from '@prisma/client';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { z } from 'zod';
-
-import { EInvoiceStatus, InvoiceStatus } from '@/entites/invoice';
 
 import { db } from '@/shared/db';
 
@@ -23,7 +21,7 @@ export type State = {
 const FormDataSchema = z.object({
   customerId: z.string({ invalid_type_error: 'Please select a customer.' }),
   amount: z.coerce.number().gt(0, { message: 'Please enter an amount greater than $0.' }), // gt - Greater Then
-  status: z.enum([EInvoiceStatus.Pending, EInvoiceStatus.Paid], {
+  status: z.nativeEnum(InvoiceStatus, {
     invalid_type_error: 'Please select an invoice status.',
   }),
 });

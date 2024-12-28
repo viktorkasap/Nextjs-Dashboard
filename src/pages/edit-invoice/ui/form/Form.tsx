@@ -3,6 +3,7 @@
 import { useActionState } from 'react';
 
 import { CheckIcon, ClockIcon, CurrencyDollarIcon, UserCircleIcon } from '@heroicons/react/24/outline';
+import { InvoiceStatus } from '@prisma/client';
 import Link from 'next/link';
 
 import { CustomerField } from '@/entites/customer';
@@ -18,10 +19,11 @@ interface FormProps {
 }
 
 export const Form = ({ invoice, customers }: FormProps) => {
-  const currentCustomer = customers.find((customer) => customer.id === invoice.customer_id);
+  const currentCustomer = customers.find((customer) => customer.id === invoice.customerId);
 
   // * Or <input type="hidden" name="invoiceId" value={invoice.id}/>
-  const updateInvoiceById = updateInvoice.bind(null, invoice.id); // const foo = func.bind() - Function Partial https://javascript.info/bind#partial-functions
+  // const foo = func.bind() - Function Partial https://javascript.info/bind#partial-functions
+  const updateInvoiceById = updateInvoice.bind(null, invoice.id);
 
   const initialState: State = { message: null, errors: {} };
   const [state, formAction, isPending] = useActionState(updateInvoiceById, initialState);
@@ -89,12 +91,12 @@ export const Form = ({ invoice, customers }: FormProps) => {
             <div className="flex gap-4">
               <div className="flex items-center">
                 <input
-                  id="pending"
-                  name="status"
                   type="radio"
-                  value="pending"
+                  name="status"
                   disabled={isPending}
-                  defaultChecked={invoice.status === 'pending'}
+                  id={InvoiceStatus.Pending}
+                  value={InvoiceStatus.Pending}
+                  defaultChecked={invoice.status === InvoiceStatus.Pending}
                   className="h-4 w-4 cursor-pointer border-gray-300 bg-gray-100 text-gray-600 focus:ring-2"
                 />
                 <label
@@ -105,12 +107,12 @@ export const Form = ({ invoice, customers }: FormProps) => {
               </div>
               <div className="flex items-center">
                 <input
-                  id="paid"
-                  name="status"
                   type="radio"
-                  value="paid"
+                  name="status"
                   disabled={isPending}
-                  defaultChecked={invoice.status === 'paid'}
+                  id={InvoiceStatus.Paid}
+                  value={InvoiceStatus.Paid}
+                  defaultChecked={invoice.status === InvoiceStatus.Paid}
                   className="h-4 w-4 cursor-pointer border-gray-300 bg-gray-100 text-gray-600 focus:ring-2"
                 />
                 <label

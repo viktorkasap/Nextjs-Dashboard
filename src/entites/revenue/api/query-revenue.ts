@@ -1,6 +1,4 @@
-import { sql } from '@vercel/postgres';
-
-import { Revenue } from '../types';
+import { db } from '@/shared/db';
 
 export async function queryRevenue() {
   const start = performance.now();
@@ -11,7 +9,7 @@ export async function queryRevenue() {
     console.log('Fetching revenue data...:', `${start.toFixed(2)}ms`);
     await new Promise((resolve) => setTimeout(resolve, 3000));
 
-    const data = await sql<Revenue>`SELECT * FROM revenue`;
+    const revenues = await db.revenue.findMany();
 
     const end = performance.now();
     const timeTaken = end - start;
@@ -21,7 +19,7 @@ export async function queryRevenue() {
     // eslint-disable-next-line no-console
     console.log('Pause time:', `${timeTaken.toFixed(2)}ms`);
 
-    return data.rows;
+    return revenues;
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('Database Error:', error);

@@ -9,9 +9,10 @@ import { formatCurrency } from '@/shared/lib';
 interface RowProps {
   customer: CustomerTable;
   renderDeleteButton: ReactNode;
+  renderEditCustomer: ReactNode;
 }
 
-export const DesktopTableRow = ({ customer, renderDeleteButton }: RowProps) => {
+export const DesktopTableRow = ({ customer, renderEditCustomer, renderDeleteButton }: RowProps) => {
   return (
     <tr
       key={customer.id}
@@ -27,7 +28,10 @@ export const DesktopTableRow = ({ customer, renderDeleteButton }: RowProps) => {
       <td className="bg-white whitespace-nowrap px-1 py-3">{formatCurrency(customer.totalPending)}</td>
       <td className="bg-white whitespace-nowrap px-1 py-3">{formatCurrency(customer.totalPaid)}</td>
       <td className="bg-white whitespace-nowrap px-3 py-3">
-        <div className="flex justify-end gap-3">{renderDeleteButton}</div>
+        <div className="flex justify-end gap-3">
+          {renderEditCustomer}
+          {renderDeleteButton}
+        </div>
       </td>
     </tr>
   );

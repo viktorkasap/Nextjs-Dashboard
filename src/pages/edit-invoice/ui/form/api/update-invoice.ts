@@ -1,11 +1,11 @@
 'use server';
 
-import { sql } from '@vercel/postgres';
+import { InvoiceStatus } from '@prisma/client';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { z } from 'zod';
 
-import { EInvoiceStatus, InvoiceStatus } from '@/entites/invoice';
+import { db } from '@/shared/db';
 
 type StateErrors = {
   customerId?: string[];
@@ -23,7 +23,7 @@ const FormDataSchema = z.object({
   date: z.string(),
   customerId: z.string({ invalid_type_error: 'Please select a customer.' }),
   amount: z.coerce.number().gt(0, { message: 'Please enter an amount greater than $0.' }), // gt - Greater Then
-  status: z.enum([EInvoiceStatus.Pending, EInvoiceStatus.Paid], {
+  status: z.nativeEnum(InvoiceStatus, {
     invalid_type_error: 'Please select an invoice status.',
   }),
 });
@@ -76,9 +76,12 @@ interface UpdateProps {
 }
 
 const queryUpdate = async ({ customerId, status, id, amountInCents }: UpdateProps) => {
-  return await sql`
-    UPDATE invoices
-    SET customer_id = ${customerId}, amount = ${amountInCents}, status = ${status}
-    WHERE id = ${id}
-  `;
+  return await db.invoice.update({
+    where: { id },
+    data: {
+      customerId,
+      amount: amountInCents,
+      status,
+    },
+  });
 };

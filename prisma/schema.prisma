@@ -21,11 +21,16 @@ model Customer {
   @@map("customers")
 }
 
+enum InvoiceStatus {
+  Pending
+  Paid
+}
+
 model Invoice {
   id         String    @id @default(uuid())
-  customerId String    @map("customer_id")
+  customerId String
   amount     Int
-  status     String
+  status     InvoiceStatus
   date       DateTime
   createdAt  DateTime  @default(now())
   updatedAt  DateTime  @default(now()) @updatedAt
@@ -36,8 +41,8 @@ model Invoice {
 }
 
 model Revenue {
-  month   String @id
-  revenue Int
+  month     String @id
+  revenue   Int
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
 
@@ -45,10 +50,10 @@ model Revenue {
 }
 
 model User {
-  id       String @id @default(uuid())
-  name     String
-  email    String @unique
-  password String
+  id        String @id @default(uuid())
+  name      String
+  email     String @unique
+  password  String
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
 

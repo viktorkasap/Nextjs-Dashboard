@@ -1,18 +1,11 @@
-import { sql } from '@vercel/postgres';
-
-import { CustomerField } from '../types';
+import { db } from '@/shared/db';
 
 export const queryCustomers = async () => {
   try {
-    const data = await sql<CustomerField>`
-      SELECT
-        id,
-        name
-      FROM customers
-      ORDER BY name ASC
-    `;
-
-    return data.rows;
+    return await db.customer.findMany({
+      select: { id: true, name: true },
+      orderBy: { name: 'asc' },
+    });
   } catch (err) {
     // eslint-disable-next-line no-console
     console.error('Database Error:', err);

@@ -1,3 +1,5 @@
+import { InvoiceStatus } from '@prisma/client';
+
 import { db } from '@/shared/db';
 
 import { ITEMS_PER_PAGE } from '../constants';
@@ -21,7 +23,8 @@ export const queryFilteredInvoices = async ({ query, currentPage }: GetFilteredI
           { customer: { email: { contains: query, mode: 'insensitive' } } },
           ...(isNaN(queryNumber) ? [] : [{ amount: { equals: queryNumber } }]),
           ...(isValidDate ? [{ date: { equals: queryDate } }] : []),
-          { status: { contains: query, mode: 'insensitive' } },
+          // { status: { contains: query, mode: 'insensitive' } },
+          ...(query === 'Pending' || query === 'Paid' ? [{ status: { equals: query as InvoiceStatus } }] : []),
         ],
       },
       include: {

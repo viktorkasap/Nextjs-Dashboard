@@ -4,7 +4,7 @@ import { CustomerTable, queryFilteredCustomers } from '@/entites/customer';
 
 import { CustomersTableSkeleton } from '@/shared/ui';
 
-import { DesktopTableRow, MobileTableRow, DeleteCustomer } from './ui';
+import { DesktopTableRow, MobileTableRow, DeleteCustomer, EditCustomer } from './ui';
 
 interface TableProps {
   query: string;
@@ -76,6 +76,7 @@ const DesktopTable = ({ customers }: TableContentProps) => {
           <DesktopTableRow
             key={`${customer.name}-${customer.email}-desk`}
             customer={customer}
+            renderEditCustomer={<EditCustomer customerId={customer.id} />}
             renderDeleteButton={<DeleteCustomer customerId={customer.id} />}
           />
         ))}
