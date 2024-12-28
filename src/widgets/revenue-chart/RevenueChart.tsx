@@ -16,8 +16,18 @@ export const RevenueChart = async ({ revenue }: { revenue: Revenue[] }) => {
 
   const { yAxisLabels, topLabel } = generateYAxis(revenue);
 
+  // If there are no revenue
   if (!revenue || revenue.length === 0) {
-    return <p className="mt-4 text-gray-400">No data available.</p>;
+    return (
+      <div className="w-full md:col-span-4">
+        <h2 className={`${lusitana.className} mb-4 text-xl md:text-2xl`}>Recent Revenue</h2>
+        <div className="rounded-xl bg-gray-50 p-4">
+          <div className=" mt-0 rounded-md bg-white p-4">
+            <p className="mt-4 text-gray-400">No data available.</p>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   return (
