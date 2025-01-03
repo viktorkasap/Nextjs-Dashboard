@@ -1,0 +1,1 @@
+export { InputAvatarUpload } from './InputAvatarUpload';

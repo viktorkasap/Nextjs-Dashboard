@@ -1,8 +1,10 @@
 export type Customer = {
   id: string;
+  createdAt: Date;
+  updatedAt: Date;
   name: string;
   email: string;
-  avatarUrl: string;
+  avatarUrl: string | null;
   avatarFile: Uint8Array | null;
 };
 
