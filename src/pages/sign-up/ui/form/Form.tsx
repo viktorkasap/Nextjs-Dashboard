@@ -2,7 +2,7 @@
 
 import { useActionState } from 'react';
 
-import { AtSymbolIcon, ExclamationCircleIcon, UserIcon } from '@heroicons/react/20/solid';
+import { AtSymbolIcon, UserIcon } from '@heroicons/react/20/solid';
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import { KeyIcon } from '@heroicons/react/24/solid';
 import Link from 'next/link';
