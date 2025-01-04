@@ -1,11 +1,12 @@
 import type { NextAuthConfig } from 'next-auth';
 
-const LOGIN_PATH = '/login';
+// const LOGIN_PATH = '/login';
+const SIGN_IN_PATH = '/sign-in';
 const DASHBOARD_PATH = '/dashboard';
 
 export const authConfig = {
   pages: {
-    signIn: LOGIN_PATH,
+    signIn: SIGN_IN_PATH,
   },
   callbacks: {
     authorized({ auth, request: { nextUrl } }) {
