@@ -12,13 +12,24 @@ import { Button } from '@/shared/ui';
 
 import { authenticate } from './api';
 
-export const Form = () => {
+interface FormProps {
+  userCreatedEmail?: string;
+}
+
+export const Form = ({ userCreatedEmail }: FormProps) => {
   const [errorMessage, formAction, isPending] = useActionState(authenticate, undefined);
 
   return (
     <form action={formAction} className="space-y-3">
       <div className="flex-1 rounded-lg bg-gray-50 px-6 pb-4 pt-8">
         <h1 className={`${lusitana.className} mb-3 text-2xl`}>Please log in to continue.</h1>
+
+        {userCreatedEmail && (
+          <div className="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-green-100 dark:text-green-600" role="alert">
+            <span className="text-sm">A new user has been created using the email address: {userCreatedEmail}</span>
+          </div>
+        )}
+
         <div className="w-full">
           <div>
             <label className="mb-3 mt-5 block text-xs font-medium text-gray-900" htmlFor="email">
@@ -30,6 +41,7 @@ export const Form = () => {
                 id="email"
                 type="email"
                 name="email"
+                defaultValue={userCreatedEmail}
                 placeholder="Enter your email address"
                 required
               />

@@ -2,7 +2,16 @@ import { AcmeLogo } from '@/shared/ui';
 
 import { Form } from './ui';
 
-export const SignIn = async () => {
+interface SignInProps {
+  searchParams?: Promise<{
+    email?: string;
+    userCreated?: string;
+  }>;
+}
+
+export const SignIn = async (props: SignInProps) => {
+  const searchParams = await props.searchParams;
+
   return (
     <main className="flex items-center justify-center md:h-screen">
       <div className="relative mx-auto flex w-full max-w-[400px] flex-col space-y-2.5 p-4 md:-mt-32">
@@ -11,7 +20,8 @@ export const SignIn = async () => {
             <AcmeLogo />
           </div>
         </div>
-        <Form />
+
+        <Form userCreatedEmail={searchParams?.email} />
       </div>
     </main>
   );
