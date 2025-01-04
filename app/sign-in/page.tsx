@@ -1,1 +1,1 @@
-export { SignPage as default } from '@/pages';
+export { SignInPage as default } from '@/pages';

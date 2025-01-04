@@ -5,6 +5,7 @@ import { useActionState } from 'react';
 import { AtSymbolIcon, ExclamationCircleIcon } from '@heroicons/react/20/solid';
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import { KeyIcon } from '@heroicons/react/24/solid';
+import Link from 'next/link';
 
 import { lusitana } from '@/shared/assets';
 import { Button } from '@/shared/ui';
@@ -54,8 +55,9 @@ export const Form = () => {
           </div>
         </div>
         <Button className="mt-4 w-full" aria-disabled={isPending}>
-          Log in <ArrowRightIcon className="ml-auto h-5 w-5 text-gray-50" />
+          Sign in <ArrowRightIcon className="ml-auto h-5 w-5 text-gray-50" />
         </Button>
+
         <div className="flex h-8 items-end space-x-1">
           {errorMessage && (
             <>
@@ -64,6 +66,10 @@ export const Form = () => {
             </>
           )}
         </div>
+
+        <Link href="/sign-up" className="block text-right text-sm text-blue-500 hover:underline">
+          Sign up page
+        </Link>
       </div>
       <code>
         <p>Credentials:</p>

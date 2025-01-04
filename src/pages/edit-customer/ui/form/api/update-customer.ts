@@ -92,16 +92,15 @@ export const updateCustomer = async (_prevState: State, formData: FormData) => {
   }
 
   // eslint-disable-next-line no-console
-  console.log('Created customer data:', { name, email, avatarUrl, avatarBuffer });
+  console.log('Update customer data:', { name, email, avatarUrl, avatarBuffer });
 
   try {
     await queryUpdate({ id, name, email, avatarUrl, avatarFile: avatarBuffer });
   } catch (error) {
     // eslint-disable-next-line no-console
-    console.log('Create customer error:', (error as Error).message);
+    console.log('Update customer error:', (error as Error).message);
 
-    // throw new Error('Failed to create invoice');
-    return { message: 'Database Error: Failed to Create Customer.' };
+    return { message: 'Database Error: Failed to Update Customer.' };
   }
 
   revalidatePath('/dashboard/customers');
@@ -129,7 +128,7 @@ const queryUpdate = async ({ id, name, email, avatarUrl, avatarFile }: QueryUpda
     });
   } catch (error) {
     // eslint-disable-next-line no-console
-    console.error('Create Customer Error:', error);
-    throw new Error('Failed to create a new customer.');
+    console.error('Update Customer Error:', error);
+    throw new Error('Failed to update customer.');
   }
 };
