@@ -11,8 +11,6 @@ interface TableProps {
   currentPage: number;
 }
 
-// 1) TODO: Add edit customer button + page
-
 export const Table = ({ query, currentPage }: TableProps) => {
   // FIXME: Update Customer Table Skeleton properly
 
